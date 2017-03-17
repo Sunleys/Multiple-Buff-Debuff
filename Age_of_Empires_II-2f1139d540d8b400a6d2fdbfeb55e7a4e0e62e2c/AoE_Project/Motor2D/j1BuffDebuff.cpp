@@ -7,7 +7,7 @@
 #include "j1FileSystem.h"
 
 
-j1BuffDebuff::j1BuffDebuff() : j1BuffDebuff()
+j1BuffDebuff::j1BuffDebuff() : j1Module()
 {
 	name = "buffdebuff"; 
 }
@@ -25,7 +25,7 @@ pugi::xml_node j1BuffDebuff::LoadBuffDebuff(pugi::xml_document& bd_file) const
 	RELEASE(buf);
 
 	if (result == NULL)
-		LOG("Could not load map xml file buff_debuff.xml. pugi error: %s", result.description());
+		LOG("Could not load xml file buff_debuff.xml. pugi error: %s", result.description());
 	else
 		ret = bd_file.child("buff_debuff");
 
