@@ -64,9 +64,6 @@
     <ClCompile Include="UI_Image.cpp">
       <Filter>Develop  ========\UserInteraface\UI_Elements</Filter>
     </ClCompile>
-    <ClCompile Include="j1Animatior.cpp">
-      <Filter>Develop  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Player.cpp">
       <Filter>Develop  ========\Modules</Filter>
     </ClCompile>
@@ -146,9 +143,6 @@
     </ClInclude>
     <ClInclude Include="UI_Image.h">
       <Filter>Develop  ========\UserInteraface\UI_Elements</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Animatior.h">
-      <Filter>Develop  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1Player.h">
       <Filter>Develop  ========\Modules</Filter>
