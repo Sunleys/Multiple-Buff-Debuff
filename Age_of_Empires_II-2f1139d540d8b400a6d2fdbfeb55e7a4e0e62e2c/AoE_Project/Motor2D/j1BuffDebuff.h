@@ -35,8 +35,6 @@ class j1BuffDebuff : public j1Module
 		float value; 
 		std::string target; 
 
-	private:
-
 
 }; 
 

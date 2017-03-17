@@ -139,15 +139,6 @@ bool j1Input::PreUpdate()
 			break;
 		}
 
-		case SDL_EventType::SDL_KEYDOWN:
-
-			if (event.key.keysym.scancode == SDL_SCANCODE_GRAVE)
-			{
-				
-			}
-
-			break;
-
 		case SDL_EventType::SDL_TEXTINPUT:
 		{
 			if (App->gui->ItemSelected != nullptr && App->gui->ItemSelected->GetUItype() == UI_TYPE::TEXT_BOX && event.text.text[0] != 'Â') {
@@ -156,19 +147,6 @@ bool j1Input::PreUpdate()
 			}
 		}
 		break;
-
-		case SDL_EventType::SDL_TEXTEDITING:
-
-			/*
-			Update the composition text.
-			Update the cursor position.
-			Update the selection length (if any).
-			*/
-			//composition = event.edit.text;
-			//cursor = event.edit.start;
-			//selection_len = event.edit.length;
-
-			break;
 
 		}
 	
