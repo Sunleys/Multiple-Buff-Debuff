@@ -4,9 +4,6 @@
     <ClCompile Include="j1Window.cpp">
       <Filter>Develop  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="j1Audio.cpp">
-      <Filter>Develop  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1App.cpp">
       <Filter>Develop  ========</Filter>
     </ClCompile>
@@ -82,9 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
-      <Filter>Develop  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Audio.h">
       <Filter>Develop  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1App.h">
