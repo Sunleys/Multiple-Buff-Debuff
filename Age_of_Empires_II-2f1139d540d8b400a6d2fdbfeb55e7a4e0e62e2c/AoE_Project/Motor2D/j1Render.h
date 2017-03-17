@@ -5,7 +5,7 @@
 #include "p2Point.h"
 #include "j1Module.h"
 
-struct Cvar;
+
 
 class j1Render : public j1Module
 {
@@ -57,9 +57,7 @@ public:
 	SDL_Rect		viewport;
 	SDL_Color		background;
 
-public:
 
-	void Console_Cvar_Input(Cvar* cvar, Command* command_type, std::string* input);
 
 };
 

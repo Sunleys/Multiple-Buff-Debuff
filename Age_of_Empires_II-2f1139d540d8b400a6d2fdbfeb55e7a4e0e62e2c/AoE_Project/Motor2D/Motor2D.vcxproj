@@ -77,7 +77,6 @@
   <ItemGroup>
     <ClCompile Include="j1Animatior.cpp" />
     <ClCompile Include="j1BuffDebuff.cpp" />
-    <ClCompile Include="j1Console.cpp" />
     <ClCompile Include="j1FileSystem.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
     <ClCompile Include="j1Gui.cpp" />
@@ -102,11 +101,8 @@
     <ClCompile Include="UI_Text_Box.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Command.h" />
-    <ClInclude Include="C_var.h" />
     <ClInclude Include="j1Animatior.h" />
     <ClInclude Include="j1BuffDebuff.h" />
-    <ClInclude Include="j1Console.h" />
     <ClInclude Include="j1FileSystem.h" />
     <ClInclude Include="j1Fonts.h" />
     <ClInclude Include="j1Gui.h" />

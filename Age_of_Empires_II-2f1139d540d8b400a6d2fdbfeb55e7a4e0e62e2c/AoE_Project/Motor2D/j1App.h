@@ -16,13 +16,10 @@ class j1Scene;
 class j1Map;
 class j1Fonts;
 class j1Gui;
-class j1Console;
 class j1Module;
 class j1BuffDebuff; 
 class j1Player; 
 
-struct Command;
-struct Cvar;
 
 class j1App
 {
@@ -95,7 +92,6 @@ public:
 	j1Map*				map = NULL;
 	j1Fonts*			font = NULL;
 	j1Gui*				gui = NULL;
-	j1Console*			console = NULL;
 	j1BuffDebuff*       buffdebuff = NULL;
 	j1Player*           player = NULL; 
 
@@ -114,9 +110,7 @@ public:
 	//Get config xml file
 	pugi::xml_node GetConfigXML()const;
 
-	//Handle Console Input ----------------------
-	void Console_Command_Input(Command* command, Cvar* cvar, std::string* input);
-	void Console_Cvar_Input(Cvar* cvar, Command* command_type, std::string* input);
+	
 
 private:
 
@@ -146,8 +140,6 @@ private:
 
 	bool				want_to_quit = false;
 
-	Cvar*				save_dir;
-	Cvar*				load_dir;
 
 	mutable std::list<std::string*>	saved_games;
 

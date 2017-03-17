@@ -4,7 +4,6 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Gui.h"
-#include "j1Console.h"
 #include "UI_Text_Box.h"
 #include "j1Window.h"
 #include "SDL/include/SDL.h"
@@ -144,7 +143,7 @@ bool j1Input::PreUpdate()
 
 			if (event.key.keysym.scancode == SDL_SCANCODE_GRAVE)
 			{
-				App->console->ChangeConsoleState();
+				
 			}
 
 			break;

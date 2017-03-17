@@ -64,9 +64,6 @@
     <ClCompile Include="UI_Image.cpp">
       <Filter>Develop  ========\UserInteraface\UI_Elements</Filter>
     </ClCompile>
-    <ClCompile Include="j1Console.cpp">
-      <Filter>Develop  ========\UserInteraface\Console</Filter>
-    </ClCompile>
     <ClCompile Include="j1Animatior.cpp">
       <Filter>Develop  ========\Modules</Filter>
     </ClCompile>
@@ -150,15 +147,6 @@
     <ClInclude Include="UI_Image.h">
       <Filter>Develop  ========\UserInteraface\UI_Elements</Filter>
     </ClInclude>
-    <ClInclude Include="j1Console.h">
-      <Filter>Develop  ========\UserInteraface\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="C_var.h">
-      <Filter>Develop  ========\UserInteraface\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>Develop  ========\UserInteraface\Console</Filter>
-    </ClInclude>
     <ClInclude Include="j1Animatior.h">
       <Filter>Develop  ========\Modules</Filter>
     </ClInclude>
@@ -190,9 +178,6 @@
     </Filter>
     <Filter Include="Develop  ========\UserInteraface\UI_Elements">
       <UniqueIdentifier>{284cbc2b-c97f-4e37-9735-d7d07abfd941}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Develop  ========\UserInteraface\Console">
-      <UniqueIdentifier>{c2b1b5cb-f746-4f36-ba24-80ebceee0eb7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Prog 2 ===========">
       <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
