@@ -11,30 +11,30 @@ j1Player::~j1Player()
 
 bool j1Player::Awake(pugi::xml_node & info)
 {
-	return false;
+	return true;
 }
 
 bool j1Player::Start()
 {
-	return false;
+	return true;
 }
 
 bool j1Player::Update()
 {
-	return false;
+	return true;
 }
 
 bool j1Player::PreUpdate()
 {
-	return false;
+	return true;
 }
 
 bool j1Player::PostUpdate()
 {
-	return false;
+	return true;
 }
 
 bool j1Player::CleanUp()
 {
-	return false;
+	return true;
 }

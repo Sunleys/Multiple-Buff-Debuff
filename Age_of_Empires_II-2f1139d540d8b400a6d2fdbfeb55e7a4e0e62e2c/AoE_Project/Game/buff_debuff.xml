@@ -4,11 +4,9 @@
 		<name duration="5" operator="+" value="5" target=""> get_defense </name>
 		<name duration="5" operator="+" value="5" target=""> get_agility </name>
 		<name duration="5" operator="+" value="5" target=""> get_life </name>
-	</buff>
-	<debuff>
 		<name duration="5" operator="+" value="5" target=""> lose_strength </name>
 		<name duration="5" operator="+" value="5" target=""> lose_defense </name>
 		<name duration="5" operator="+" value="5" target=""> lose_agility </name>
 		<name duration="5" operator="+" value="5" target=""> poison </name>
-	</debuff>
+	</buff>
 </buff_debuff>

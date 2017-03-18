@@ -3,6 +3,14 @@
 
 #include "j1Module.h"
 
+struct Buff
+{
+	std::string buffdebuff_name;
+	float duration;
+	std::string oper;  //operator
+	float value;
+	std::string target;
+};
 
 class j1BuffDebuff : public j1Module
 {
@@ -26,15 +34,18 @@ class j1BuffDebuff : public j1Module
 		// Called before quitting
 		bool CleanUp();
 	
-		pugi::xml_node LoadBuffDebuff(pugi::xml_document& bd_file) const;
+		pugi::xml_node LoadXMLBuffDebuff(pugi::xml_document& bd_file) const;
+
+		//Utils
+		bool AddBuffToList(Buff* bd);
+
+		bool LoadBuffDebuff(pugi::xml_node& bd_node, Buff* bd);
 
 	private: 
-		std::string buffdebuff_name; 
-		float duration; 
-		std::string oper;  //operator
-		float value; 
-		std::string target; 
-
+		
+		pugi::xml_document	buff_file;
+		std::list<Buff*> buffList;
+		Buff* buff_debuff;
 
 }; 
 

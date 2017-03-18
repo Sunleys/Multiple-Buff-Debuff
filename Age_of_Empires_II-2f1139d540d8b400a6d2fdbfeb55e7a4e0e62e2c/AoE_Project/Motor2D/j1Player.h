@@ -2,6 +2,7 @@
 #define _J1_PLAYER_H_
 
 #include "j1Module.h"
+#include "j1BuffDebuff.h"
 
 class j1Player : public j1Module
 {
@@ -32,6 +33,7 @@ private:
 	int defense;
 	int agility;
 	int attack;
+
 };
 
 

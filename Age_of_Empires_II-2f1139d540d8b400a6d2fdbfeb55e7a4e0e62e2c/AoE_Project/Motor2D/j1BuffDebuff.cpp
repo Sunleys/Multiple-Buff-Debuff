@@ -1,4 +1,3 @@
-#include <iostream>		
 #include <sstream> 
 #include "p2Log.h"
 
@@ -15,7 +14,7 @@ j1BuffDebuff::j1BuffDebuff() : j1Module()
 j1BuffDebuff::~j1BuffDebuff()
 {}
 
-pugi::xml_node j1BuffDebuff::LoadBuffDebuff(pugi::xml_document& bd_file) const
+pugi::xml_node j1BuffDebuff::LoadXMLBuffDebuff(pugi::xml_document& bd_file) const
 {
 	pugi::xml_node ret;
 
@@ -33,6 +32,26 @@ pugi::xml_node j1BuffDebuff::LoadBuffDebuff(pugi::xml_document& bd_file) const
 }
 
 
+bool j1BuffDebuff::LoadBuffDebuff(pugi::xml_node & bd_node, Buff * bd)
+{
+	bool ret = true;
+	//bd->bd_info = bd_node.child("buff");
+	bd->buffdebuff_name = bd_node.child("name").child_value();
+	bd->duration = bd_node.attribute("duration").as_float();
+	bd->oper = bd_node.attribute("operator").as_string();
+	bd->value = bd_node.attribute("value").as_float();
+	bd->target = bd_node.attribute("target").as_string();
+
+
+	return ret;
+}
+
+bool j1BuffDebuff::AddBuffToList(Buff* bd)
+{
+	buffList.push_back(bd);
+
+	return true;
+}
 
 bool j1BuffDebuff::Awake(pugi::xml_node& info)
 {
@@ -41,21 +60,23 @@ bool j1BuffDebuff::Awake(pugi::xml_node& info)
 	pugi::xml_node     bd_info;
 
 	bool ret = false;
-
-	bd_node = LoadBuffDebuff(info_buffdebuff); 
+	
+	bd_info = LoadXMLBuffDebuff(info_buffdebuff);
 
 	//Load App config data
 	
-	if (bd_node.empty() == false)
+	if (bd_info.empty() == false)
 	{
 		// self-config
 		ret = true;
-		bd_info = bd_node.child("buff");
-		buffdebuff_name = bd_info.child("name").child_value(); 
-		duration = bd_info.attribute("duration").as_float(); 
-		oper = bd_info.attribute("operator").as_string();
-		value = bd_info.attribute("value").as_float(); 
-		target = bd_info.attribute("target").as_string(); 
+		for (bd_node = bd_info.child("name"); bd_node && ret; bd_node = bd_info.next_sibling("buff"))
+		{
+			Buff* bd = new Buff();
+
+			LoadBuffDebuff(bd_node, bd);
+			LOG(" BUFF DEBUFF %s %d %c %s %s",bd->buffdebuff_name, bd->duration, bd->oper, bd->target, bd->value);
+		}
+		
 	}
 	
 	return ret; 

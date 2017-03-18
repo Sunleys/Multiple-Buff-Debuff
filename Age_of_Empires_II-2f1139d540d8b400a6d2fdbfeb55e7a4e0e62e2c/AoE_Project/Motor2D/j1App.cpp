@@ -34,6 +34,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	font = new j1Fonts();
 	gui = new j1Gui();
 	buffdebuff = new j1BuffDebuff();
+	player = new j1Player();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -44,7 +45,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(font);
 	AddModule(gui);
-	AddModule(buffdebuff); 
+	AddModule(buffdebuff);
+	AddModule(player);
 
 	// scene last
 	AddModule(scene);
