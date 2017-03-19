@@ -41,7 +41,7 @@ bool j1BuffDebuff::LoadBuffDebuff(pugi::xml_node & bd_node, Buff * bd)
 	//node_buff = bd_node.child("buff");
 	bd->buffdebuff_name = bd_node.child("name").child_value();
 	bd->duration = bd_node.attribute("duration").as_float();
-	bd->oper = bd_node.attribute("operator").as_string();
+	bd->oper = bd_node.attribute("operator").as_int();
 	bd->value = bd_node.attribute("value").as_float();
 	bd->target = bd_node.attribute("target").as_string();
 
@@ -93,12 +93,83 @@ bool j1BuffDebuff::Start()
 // Called each loop iteration
 bool j1BuffDebuff::Update()
 {
-	return true; 
+	
+	return true;
 }
 
 
 // Called before quitting
 bool j1BuffDebuff::CleanUp()
 {
+	return true; 
+}
+
+bool j1BuffDebuff::ApplyBuff(std::string buff_name)
+{
+	
+	std::list<Buff*>::iterator item = buffList.begin();
+	while (item != buffList.end())
+	{
+		if ((*item)->buffdebuff_name == buff_name)
+		{
+			switch ((*item)->oper)
+			{
+
+			case(sum):
+
+				if ((*item)->target == "enemy")
+				{
+
+				}
+				else
+				{
+
+				}
+				
+				break;
+
+			case(substract):
+
+				if ((*item)->target == "enemy")
+				{
+
+				}
+				else
+				{
+
+				}
+				break; 
+
+			case(multiply): 
+
+				if ((*item)->target == "enemy")
+				{
+
+				}
+				else
+				{
+
+				}
+				break; 
+
+			case(divide): 
+
+				if ((*item)->target == "enemy")
+				{
+
+				}
+				else
+				{
+
+				}
+				break; 
+
+			default:
+
+				break;
+			}
+		}
+	}
+
 	return true; 
 }

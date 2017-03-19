@@ -7,13 +7,20 @@ struct Buff
 {
 	std::string buffdebuff_name;
 	float duration;
-	std::string oper;  //operator
+	int oper;  //operator
 	float value;
 	std::string target;
 };
 
+enum Operators
+{
+	sum = 0,  
+	substract = 1, 
+	multiply = 2, 
+	divide = 3
+};
 
-struct 
+
 class j1BuffDebuff : public j1Module
 {
 	public:
@@ -42,7 +49,7 @@ class j1BuffDebuff : public j1Module
 		bool AddBuffToList(Buff* bd);
 
 		bool LoadBuffDebuff(pugi::xml_node& bd_node, Buff* bd);
-
+		bool ApplyBuff(std::string buff_name);
 	private: 
 		
 		pugi::xml_document	buff_file;
