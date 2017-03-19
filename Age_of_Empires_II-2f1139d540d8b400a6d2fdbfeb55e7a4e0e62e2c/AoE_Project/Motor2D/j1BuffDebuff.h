@@ -12,6 +12,8 @@ struct Buff
 	std::string target;
 };
 
+
+struct 
 class j1BuffDebuff : public j1Module
 {
 	public:

@@ -34,14 +34,16 @@ pugi::xml_node j1BuffDebuff::LoadXMLBuffDebuff(pugi::xml_document& bd_file) cons
 
 bool j1BuffDebuff::LoadBuffDebuff(pugi::xml_node & bd_node, Buff * bd)
 {
+
+	pugi::xml_node node_buff; 
+
 	bool ret = true;
-	//bd->bd_info = bd_node.child("buff");
+	//node_buff = bd_node.child("buff");
 	bd->buffdebuff_name = bd_node.child("name").child_value();
 	bd->duration = bd_node.attribute("duration").as_float();
 	bd->oper = bd_node.attribute("operator").as_string();
 	bd->value = bd_node.attribute("value").as_float();
 	bd->target = bd_node.attribute("target").as_string();
-
 
 	return ret;
 }
@@ -59,7 +61,7 @@ bool j1BuffDebuff::Awake(pugi::xml_node& info)
 	pugi::xml_node     bd_node;
 	pugi::xml_node     bd_info;
 
-	bool ret = false;
+	bool ret = true;
 	
 	bd_info = LoadXMLBuffDebuff(info_buffdebuff);
 
@@ -68,13 +70,13 @@ bool j1BuffDebuff::Awake(pugi::xml_node& info)
 	if (bd_info.empty() == false)
 	{
 		// self-config
-		ret = true;
-		for (bd_node = bd_info.child("name"); bd_node && ret; bd_node = bd_info.next_sibling("buff"))
+		for (bd_node = info_buffdebuff.child("buff_debuff").child("buff").child("name"); bd_node && ret; bd_node = bd_node.next_sibling("name"))
 		{
 			Buff* bd = new Buff();
 
-			LoadBuffDebuff(bd_node, bd);
-			LOG(" BUFF DEBUFF %s %d %c %s %s",bd->buffdebuff_name, bd->duration, bd->oper, bd->target, bd->value);
+			ret = LoadBuffDebuff(bd_node, bd);
+			AddBuffToList(bd); 
+			//LOG(" BUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUFF DEBUFF %s %d %c %s %s",bd->buffdebuff_name, bd->duration, bd->oper, bd->target, bd->value);
 		}
 		
 	}
