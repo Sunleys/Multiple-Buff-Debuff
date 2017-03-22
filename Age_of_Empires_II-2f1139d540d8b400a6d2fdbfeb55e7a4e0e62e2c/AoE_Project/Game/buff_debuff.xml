@@ -1,16 +1,22 @@
-<!-- 
-sum - 0
-
--->
+<!-- :) -->
 <buff_debuff>
 	<buff>
-		<name duration="5" operator="1" value="5" target="enemy"> get_strength </name>
-		<name duration="5" operator="1" value="5" target="enemy"> get_defense </name>
-		<name duration="5" operator="1" value="5" target="enemy"> get_agility </name>
-		<name duration="5" operator="1" value="5" target="enemy"> get_life </name>
-		<name duration="5" operator="2" value="5" target="enemy"> lose_strength </name>
-		<name duration="5" operator="2" value="5" target="enemy"> lose_defense </name>
-		<name duration="5" operator="2" value="5" target="enemy"> lose_agility </name>
-		<name duration="5" operator="2" value="5" target="enemy"> poison </name>
+		<type id="attribute">
+			<name duration="5" operator="1" value="5" target="enemy"> get_strength </name>
+			<name duration="5" operator="1" value="5" target="enemy"> get_defense </name>
+			<name duration="5" operator="1" value="5" target="enemy"> get_agility </name>
+			<name duration="5" operator="2" value="5" target="enemy"> lose_strength </name>
+			<name duration="5" operator="2" value="5" target="enemy"> lose_defense </name>
+			<name duration="5" operator="2" value="5" target="enemy"> lose_agility </name>
+		</type>
+		<type id="item">
+			<name duration="5" operator="1" value="5" target="enemy"> get_life </name>
+			<name duration="5" operator="2" value="5" target="enemy"> poison </name>
+			<name duration="5" operator="2" value="5" target="enemy"> get_speed </name>
+			<name duration="5" operator="2" value="5" target="enemy"> lose_speed </name>
+		</type>
+		<type id="terrain">
+			<name height="" width="" duration="5" operator="2" value="5" target=""> area </name>
+		</type>
 	</buff>
 </buff_debuff>

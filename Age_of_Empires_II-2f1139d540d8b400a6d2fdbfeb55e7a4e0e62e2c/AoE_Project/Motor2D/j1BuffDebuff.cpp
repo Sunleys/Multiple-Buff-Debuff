@@ -1,5 +1,6 @@
 #include <sstream> 
 #include "p2Log.h"
+#include "j1Timer.h"
 
 #include "j1BuffDebuff.h"
 #include "j1App.h"
@@ -39,6 +40,7 @@ bool j1BuffDebuff::LoadBuffDebuff(pugi::xml_node & bd_node, Buff * bd)
 
 	bool ret = true;
 	//node_buff = bd_node.child("buff");
+	bd->type = bd_node.child("type").attribute("id").as_string(); 
 	bd->buffdebuff_name = bd_node.child("name").child_value();
 	bd->duration = bd_node.attribute("duration").as_float();
 	bd->oper = bd_node.attribute("operator").as_int();
@@ -70,15 +72,17 @@ bool j1BuffDebuff::Awake(pugi::xml_node& info)
 	if (bd_info.empty() == false)
 	{
 		// self-config
-		for (bd_node = info_buffdebuff.child("buff_debuff").child("buff").child("name"); bd_node && ret; bd_node = bd_node.next_sibling("name"))
+		for (bd_node = info_buffdebuff.child("buff_debuff").child("buff").child("type"); bd_node && ret; bd_node = bd_node.next_sibling("type"))
 		{
-			Buff* bd = new Buff();
+			for (pugi::xml_node node = bd_node.child("name"); node && ret; node = node.next_sibling("name"))
+			{
+				Buff* bd = new Buff();
 
-			ret = LoadBuffDebuff(bd_node, bd);
-			AddBuffToList(bd); 
-			//LOG(" BUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUFF DEBUFF %s %d %c %s %s",bd->buffdebuff_name, bd->duration, bd->oper, bd->target, bd->value);
+				ret = LoadBuffDebuff(node, bd);
+				AddBuffToList(bd); 
+				//LOG(" BUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUFF DEBUFF %s %d %c %s %s",bd->buffdebuff_name, bd->duration, bd->oper, bd->target, bd->value);
+			}
 		}
-		
 	}
 	
 	return ret; 
@@ -104,9 +108,42 @@ bool j1BuffDebuff::CleanUp()
 	return true; 
 }
 
-bool j1BuffDebuff::ApplyBuff(std::string buff_name)
+bool j1BuffDebuff::CheckTypeBuffDebuff(std::string type)
 {
-	
+	std::list<Buff*>::iterator item = buffList.begin();
+	while (item != buffList.end())
+	{
+		if ((*item)->type == type)
+		{
+			if (type == "attribute")
+			{
+				ApplyBuffAttributes((*item)->buffdebuff_name);
+			}
+			else if (type == "item")
+			{
+				ApplyBuffItems((*item)->buffdebuff_name);
+			}
+			else if (type == "terrain")
+			{
+				ApplyBuffTerrain((*item)->buffdebuff_name);
+			}
+			else
+			{
+				LOG("ANY TYPE :')");
+			}
+		}
+		else
+		{
+			LOG("It doesn't work! =( "); 
+		}
+	}
+
+	return true; 
+}
+
+
+bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
+{
 	std::list<Buff*>::iterator item = buffList.begin();
 	while (item != buffList.end())
 	{
@@ -114,12 +151,15 @@ bool j1BuffDebuff::ApplyBuff(std::string buff_name)
 		{
 			switch ((*item)->oper)
 			{
-
 			case(sum):
 
 				if ((*item)->target == "enemy")
 				{
-
+					int value = (*item)->value; 
+					
+					//carreguem el valor del xml 
+					//activar el buffo???? bool???
+					//control de temps -  timer 
 				}
 				else
 				{
@@ -170,6 +210,23 @@ bool j1BuffDebuff::ApplyBuff(std::string buff_name)
 			}
 		}
 	}
+
+	return true; 
+}
+
+bool j1BuffDebuff::ApplyBuffItems(std::string buff_name)
+{
+
+
+
+	return true; 
+}
+
+bool j1BuffDebuff::ApplyBuffTerrain(std::string buff_name)
+{
+
+
+
 
 	return true; 
 }

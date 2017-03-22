@@ -27,12 +27,17 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+	
+	pugi::xml_node LoadXMLPlayers(pugi::xml_node& bd_node, Buff* bd);
+	bool ModifyAttributes(float value); 
+	
 
 private: 
 	uint life;
 	int defense;
 	int agility;
 	int attack;
+	float modifier; 
 
 };
 

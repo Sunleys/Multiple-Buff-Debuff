@@ -6,6 +6,7 @@
 struct Buff
 {
 	std::string buffdebuff_name;
+	std::string type; 
 	float duration;
 	int oper;  //operator
 	float value;
@@ -15,9 +16,9 @@ struct Buff
 enum Operators
 {
 	sum = 0,  
-	substract = 1, 
-	multiply = 2, 
-	divide = 3
+	substract, 
+	multiply, 
+	divide
 };
 
 
@@ -49,7 +50,13 @@ class j1BuffDebuff : public j1Module
 		bool AddBuffToList(Buff* bd);
 
 		bool LoadBuffDebuff(pugi::xml_node& bd_node, Buff* bd);
-		bool ApplyBuff(std::string buff_name);
+
+		bool CheckTypeBuffDebuff(std::string type); 
+
+		bool ApplyBuffAttributes(std::string buff_name);
+		bool ApplyBuffItems(std::string buff_name);
+		bool ApplyBuffTerrain(std::string buff_name);
+
 	private: 
 		
 		pugi::xml_document	buff_file;
