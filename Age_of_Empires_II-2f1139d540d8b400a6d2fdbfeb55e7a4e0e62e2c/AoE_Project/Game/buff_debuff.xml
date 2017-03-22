@@ -2,7 +2,7 @@
 <buff_debuff>
 	<buff>
 		<type id="attribute">
-			<name duration="5" operator="1" value="5" target="enemy"> get_strength </name>
+			<name duration="5" operator="0" value="5" target="enemy"> get_strength </name>
 			<name duration="5" operator="1" value="5" target="enemy"> get_defense </name>
 			<name duration="5" operator="1" value="5" target="enemy"> get_agility </name>
 			<name duration="5" operator="2" value="5" target="enemy"> lose_strength </name>

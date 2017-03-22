@@ -1,15 +1,17 @@
 #include <sstream> 
 #include "p2Log.h"
 #include "j1Timer.h"
-
+#include "j1Input.h"
 #include "j1BuffDebuff.h"
 #include "j1App.h"
 #include "j1FileSystem.h"
-
+#include "j1Player.h"
+#include "SDL/include/SDL.h"
 
 j1BuffDebuff::j1BuffDebuff() : j1Module()
 {
-	name = "buffdebuff"; 
+	name = "buffdebuff";
+
 }
 
 j1BuffDebuff::~j1BuffDebuff()
@@ -49,7 +51,7 @@ bool j1BuffDebuff::LoadBuffDebuff(pugi::xml_node & bd_node, Buff * bd)
 		bd->oper = bd_node.attribute("operator").as_int();
 		bd->value = bd_node.attribute("value").as_float();
 		bd->target = bd_node.attribute("target").as_string();
-				
+
 	}
 	return ret;
 }
@@ -68,11 +70,11 @@ bool j1BuffDebuff::Awake(pugi::xml_node& info)
 	pugi::xml_node     bd_info;
 
 	bool ret = true;
-	
+
 	bd_info = LoadXMLBuffDebuff(info_buffdebuff);
 
 	//Load App config data
-	
+
 	if (bd_info.empty() == false)
 	{
 		// self-config
@@ -83,24 +85,29 @@ bool j1BuffDebuff::Awake(pugi::xml_node& info)
 				Buff* bd = new Buff();
 
 				ret = LoadBuffDebuff(node, bd);
-				AddBuffToList(bd); 
+				AddBuffToList(bd);
 				//LOG(" BUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUFF DEBUFF %s %d %c %s %s",bd->buffdebuff_name, bd->duration, bd->oper, bd->target, bd->value);
 			}
 		}
 	}
-	
-	return ret; 
+
+	return ret;
 }
 
 // Called before the first frame
 bool j1BuffDebuff::Start()
 {
-	return true; 
+	return true;
 }
 
 // Called each loop iteration
 bool j1BuffDebuff::Update()
 {
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	{
+		ApplyBuffAttributes("get_strength");
+		LOG("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA :) ");
+	}
 	
 	return true;
 }
@@ -133,7 +140,7 @@ bool j1BuffDebuff::CheckTypeBuffDebuff(std::string type)
 			}
 			else
 			{
-				LOG("ANY TYPE :')");
+				LOG("ANY TYPE BUFF DEBUFF :')");
 			}
 		}
 		else
@@ -148,6 +155,7 @@ bool j1BuffDebuff::CheckTypeBuffDebuff(std::string type)
 
 bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
 {
+	pugi::xml_node atr_node; 
 	std::list<Buff*>::iterator item = buffList.begin();
 	while (item != buffList.end())
 	{
@@ -159,8 +167,10 @@ bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
 
 				if ((*item)->target == "enemy")
 				{
-					int value = (*item)->value; 
-					
+					int value_to_apply = (*item)->value; 
+					char c = (char)value_to_apply; 
+					atr_node = App->player->GetConfigPlayer().child("players").child("player"); 
+					atr_node.attribute("modifier").set_value(c); 
 					//carreguem el valor del xml 
 					//activar el buffo???? bool???
 					//control de temps -  timer 
@@ -220,7 +230,6 @@ bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
 
 bool j1BuffDebuff::ApplyBuffItems(std::string buff_name)
 {
-
 
 
 	return true; 

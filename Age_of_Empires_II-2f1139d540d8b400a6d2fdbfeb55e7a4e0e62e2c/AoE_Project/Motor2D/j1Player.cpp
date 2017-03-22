@@ -12,7 +12,7 @@ j1Player::~j1Player()
 {
 }
 
-bool j1Player::Awake(pugi::xml_node & info)
+bool j1Player::Awake(pugi::xml_node& info)
 {
 	pugi::xml_document info_players;
 	pugi::xml_node     bd_node;
@@ -70,12 +70,12 @@ pugi::xml_node j1Player::LoadXMLPlayers(pugi::xml_document& player_doc)
 	pugi::xml_node ret;
 
 	char* buf;
-	int size = App->fs->Load("players.xml", &buf);
+	int size = App->fs->Load("player.xml", &buf);
 	pugi::xml_parse_result result = player_doc.load_buffer(buf, size);
 	RELEASE(buf);
 
 	if (result == NULL)
-		LOG("Could not load xml file players.xml. pugi error: %s", result.description());
+		LOG("Could not load xml file player.xml. pugi error: %s", result.description());
 	else
 		ret = player_doc.child("players");
 
@@ -100,7 +100,7 @@ bool j1Player::AddPlayers(j1Player* player)
 	return false;
 }
 
-bool j1Player::LoadPlayers(pugi::xml_node & node, j1Player* unit)
+bool j1Player::LoadPlayers(pugi::xml_node& node, j1Player* unit)
 {
 	bool ret = false;
 
@@ -120,3 +120,10 @@ bool j1Player::LoadPlayers(pugi::xml_node & node, j1Player* unit)
 	}
 	return ret;
 }
+
+pugi::xml_node j1Player::GetConfigPlayer() const
+{
+	return p_node; 
+}
+
+

@@ -4,6 +4,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Gui.h"
+#include "j1BuffDebuff.h"
 #include "UI_Text_Box.h"
 #include "j1Window.h"
 #include "SDL/include/SDL.h"
@@ -74,6 +75,7 @@ bool j1Input::PreUpdate()
 			else
 				keyboard[i] = KEY_IDLE;
 		}
+
 	}
 
 	for (int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
@@ -84,8 +86,6 @@ bool j1Input::PreUpdate()
 		if (mouse_buttons[i] == KEY_UP)
 			mouse_buttons[i] = KEY_IDLE;
 	}
-
-
 
 
 	// SDL Events ----------------------------------------------

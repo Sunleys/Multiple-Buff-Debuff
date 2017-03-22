@@ -32,7 +32,9 @@ public:
 	bool ModifyAttributes(float value); 
 	bool AddPlayers(j1Player* player);
 	bool LoadPlayers(pugi::xml_node& node, j1Player* unit);
-
+	
+	pugi::xml_node GetConfigPlayer() const;
+	
 private: 
 
 	std::string id;
@@ -41,6 +43,8 @@ private:
 	int agility;
 	int attack;
 	float modifier; 
+
+	pugi::xml_node p_node;
 
 	std::list<j1Player*> playerList;
 };

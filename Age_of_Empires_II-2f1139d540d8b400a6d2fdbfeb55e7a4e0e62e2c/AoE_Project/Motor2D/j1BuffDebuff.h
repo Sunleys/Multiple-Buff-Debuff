@@ -59,7 +59,6 @@ class j1BuffDebuff : public j1Module
 
 	private: 
 		
-		pugi::xml_document	buff_file;
 		std::list<Buff*> buffList;
 		Buff* buff_debuff;
 
