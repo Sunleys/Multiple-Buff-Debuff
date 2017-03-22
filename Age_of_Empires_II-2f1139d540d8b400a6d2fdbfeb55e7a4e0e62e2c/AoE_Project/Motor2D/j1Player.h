@@ -28,9 +28,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 	
-	pugi::xml_node LoadXMLPlayers(pugi::xml_node& bd_node, Buff* bd);
+	pugi::xml_node LoadXMLPlayers(pugi::xml_node& bd_node);
 	bool ModifyAttributes(float value); 
-	
+	bool AddPlayers(j1Player* player);
+	bool LoadPlayers(pugi::xml_node& node, j1Player* unit);
 
 private: 
 	uint life;
@@ -39,6 +40,7 @@ private:
 	int attack;
 	float modifier; 
 
+	std::list<j1Player*> playerList;
 };
 
 
