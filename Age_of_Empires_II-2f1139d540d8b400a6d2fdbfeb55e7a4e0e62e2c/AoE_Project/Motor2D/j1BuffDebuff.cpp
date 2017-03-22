@@ -35,18 +35,22 @@ pugi::xml_node j1BuffDebuff::LoadXMLBuffDebuff(pugi::xml_document& bd_file) cons
 
 bool j1BuffDebuff::LoadBuffDebuff(pugi::xml_node & bd_node, Buff * bd)
 {
+	bool ret = false;
 
-	pugi::xml_node node_buff; 
+	if (bd_node && bd)
+	{
+		pugi::xml_node node_buff;
 
-	bool ret = true;
-	//node_buff = bd_node.child("buff");
-	bd->type = bd_node.child("type").attribute("id").as_string(); 
-	bd->buffdebuff_name = bd_node.child("name").child_value();
-	bd->duration = bd_node.attribute("duration").as_float();
-	bd->oper = bd_node.attribute("operator").as_int();
-	bd->value = bd_node.attribute("value").as_float();
-	bd->target = bd_node.attribute("target").as_string();
+		ret = true;
 
+		bd->type = bd_node.child("type").attribute("id").as_string();
+		bd->buffdebuff_name = bd_node.child("name").child_value();
+		bd->duration = bd_node.attribute("duration").as_float();
+		bd->oper = bd_node.attribute("operator").as_int();
+		bd->value = bd_node.attribute("value").as_float();
+		bd->target = bd_node.attribute("target").as_string();
+				
+	}
 	return ret;
 }
 

@@ -1,4 +1,7 @@
 #include "j1Player.h"
+#include "j1FileSystem.h"
+#include "j1App.h"
+#include "p2Log.h"
 
 j1Player::j1Player() : j1Module()
 {
@@ -24,17 +27,12 @@ bool j1Player::Awake(pugi::xml_node & info)
 	if (bd_info.empty() == false)
 	{
 		// self-config
-		for (bd_node = info_players.child("buff_debuff").child("buff").child("type"); bd_node && ret; bd_node = bd_node.next_sibling("type"))
+		for (bd_node = info_players.child("players").child("player"); bd_node && ret; bd_node = bd_node.next_sibling("player"))
 		{
-			for (pugi::xml_node node = bd_node.child("name"); node && ret; node = node.next_sibling("name"))
-			{
 				j1Player* unit = new j1Player();
-				
-
-				
-				AddPlayers();
+				ret = LoadPlayers(bd_node, unit);
+				AddPlayers(unit);
 				//LOG(" BUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUFF DEBUFF %s %d %c %s %s",bd->buffdebuff_name, bd->duration, bd->oper, bd->target, bd->value);
-			}
 		}
 	}
 
@@ -48,6 +46,7 @@ bool j1Player::Start()
 
 bool j1Player::Update()
 {
+	
 	return true;
 }
 
@@ -66,11 +65,21 @@ bool j1Player::CleanUp()
 	return true;
 }
 
-pugi::xml_node j1Player::LoadXMLPlayers(pugi::xml_node& bd_node)
+pugi::xml_node j1Player::LoadXMLPlayers(pugi::xml_document& player_doc)
 {
-	/*
-	
-	*/
+	pugi::xml_node ret;
+
+	char* buf;
+	int size = App->fs->Load("players.xml", &buf);
+	pugi::xml_parse_result result = player_doc.load_buffer(buf, size);
+	RELEASE(buf);
+
+	if (result == NULL)
+		LOG("Could not load xml file players.xml. pugi error: %s", result.description());
+	else
+		ret = player_doc.child("players");
+
+	return ret;
 }
 
 
@@ -81,9 +90,9 @@ bool j1Player::ModifyAttributes(float value)
 	return true; 
 }
 
-bool j1Player::AddPlayers(j1Player * player)
+bool j1Player::AddPlayers(j1Player* player)
 {
-	if (!player)
+	if (player)
 	{
 		this->playerList.push_back(player);
 		return true;
@@ -91,12 +100,23 @@ bool j1Player::AddPlayers(j1Player * player)
 	return false;
 }
 
-bool j1Player::LoadPlayers(pugi::xml_node & node, j1Player * unit)
+bool j1Player::LoadPlayers(pugi::xml_node & node, j1Player* unit)
 {
-	if (!node && !unit)
-	{
+	bool ret = false;
 
-		return true;
+	if (node && unit)
+	{
+		pugi::xml_node node_units;
+
+		ret = true;
+
+		unit->id = node.child("player").attribute("id").as_string();
+		unit->life = node.child("player").attribute("life").as_uint();
+		unit->agility = node.child("player").attribute("agility").as_uint();
+		unit->defense = node.child("player").attribute("defense").as_uint();
+		unit->attack = node.child("player").attribute("attack").as_uint();
+		unit->modifier = node.child("player").attribute("modifier").as_uint();
+
 	}
-	return false;
+	return ret;
 }

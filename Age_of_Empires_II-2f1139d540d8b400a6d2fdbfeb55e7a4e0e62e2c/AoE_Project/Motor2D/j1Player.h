@@ -28,12 +28,14 @@ public:
 	// Called before quitting
 	bool CleanUp();
 	
-	pugi::xml_node LoadXMLPlayers(pugi::xml_node& bd_node);
+	pugi::xml_node LoadXMLPlayers(pugi::xml_document& player_doc);
 	bool ModifyAttributes(float value); 
 	bool AddPlayers(j1Player* player);
 	bool LoadPlayers(pugi::xml_node& node, j1Player* unit);
 
 private: 
+
+	std::string id;
 	uint life;
 	int defense;
 	int agility;
