@@ -87,6 +87,12 @@ bool j1Input::PreUpdate()
 			mouse_buttons[i] = KEY_IDLE;
 	}
 
+	//  =') -----------------------------------------------------------------------
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	{
+		App->buffdebuff->CheckTypeBuffDebuff("attribute", "get_strength", "player1"); 
+	}
+
 
 	// SDL Events ----------------------------------------------
 	SDL_StartTextInput();

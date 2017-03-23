@@ -22,6 +22,9 @@ struct AppliedBuff
 	std::string attr_to_change;
 	std::string id_player_buffed;
 	float original_value;
+
+	AppliedBuff(j1Timer timer, uint timer_duration, std::string attr_to_change, std::string id_player_buffed, float original_value): timer(timer), timer_duration(timer_duration), attr_to_change(attr_to_change), id_player_buffed(id_player_buffed), original_value(original_value){}
+
 };
 enum Operators
 {
@@ -63,10 +66,9 @@ class j1BuffDebuff : public j1Module
 
 		bool ApplyBuffAttributes(std::string buff_name, std::string id_players);
 		bool ApplyBuffItems(std::string buff_name);
-		bool ApplyBuffTerrain(std::string buff_name);
+		
+		bool CheckAppliedBuff(std::list<AppliedBuff*> appliedbuffList); 
 
-		bool CreateAppliedBuff(j1Timer timer, uint timer_duration, std::string attr_to_change, std::string id_player_buffed, float original_value);
-	
 	private: 
 		
 		std::list<Buff*> buffList;
