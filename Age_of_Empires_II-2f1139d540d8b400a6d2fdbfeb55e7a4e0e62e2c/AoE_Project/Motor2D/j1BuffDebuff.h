@@ -7,6 +7,7 @@ struct Buff
 {
 	std::string buffdebuff_name;
 	std::string type; 
+	std::string attr_to_change;
 	float duration;
 	int oper;  //operator
 	float value;

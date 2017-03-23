@@ -51,7 +51,7 @@ bool j1BuffDebuff::LoadBuffDebuff(pugi::xml_node & bd_node, Buff * bd)
 		bd->oper = bd_node.attribute("operator").as_int();
 		bd->value = bd_node.attribute("value").as_float();
 		bd->target = bd_node.attribute("target").as_string();
-
+		bd->attr_to_change = bd_node.attribute("attr_to_change").as_string();
 	}
 	return ret;
 }
@@ -161,28 +161,43 @@ bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
 
 				if ((*item)->target == "enemy")
 				{
-					/*
-					if ((*item)->attribute == "defense")
+					if ((*item)->attr_to_change == "defense")
+					{
+						// modificat attribute player
+						//inicialitzar temps --> al uptdate de player es controla el temps per treure el debuff
+					}
+					else if ((*item)->attr_to_change == "attack")
 					{
 
 					}
-					else if ((*item)->attribute == "attack")
+					else if ((*item)->attr_to_change == "agility")
 					{
 
 					}
-					else if ((*item)->attribute == "agility")
+					else if ((*item)->attr_to_change == "life")
 					{
 
 					}
-					else if ((*item)->attribute == "life")
-					{
-
-					}*/
 	
 				}
 				else
 				{
+					if ((*item)->attr_to_change == "defense")
+					{
 
+					}
+					else if ((*item)->attr_to_change == "attack")
+					{
+
+					}
+					else if ((*item)->attr_to_change == "agility")
+					{
+
+					}
+					else if ((*item)->attr_to_change == "life")
+					{
+
+					}
 				}
 				
 				break;
@@ -191,11 +206,41 @@ bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
 
 				if ((*item)->target == "enemy")
 				{
+					if ((*item)->attr_to_change == "defense")
+					{
 
+					}
+					else if ((*item)->attr_to_change == "attack")
+					{
+
+					}
+					else if ((*item)->attr_to_change == "agility")
+					{
+
+					}
+					else if ((*item)->attr_to_change == "life")
+					{
+
+					}
 				}
 				else
 				{
+					if ((*item)->attr_to_change == "defense")
+					{
 
+					}
+					else if ((*item)->attr_to_change == "attack")
+					{
+
+					}
+					else if ((*item)->attr_to_change == "agility")
+					{
+
+					}
+					else if ((*item)->attr_to_change == "life")
+					{
+
+					}
 				}
 				break; 
 
@@ -203,11 +248,41 @@ bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
 
 				if ((*item)->target == "enemy")
 				{
+					if ((*item)->attr_to_change == "defense")
+					{
 
+					}
+					else if ((*item)->attr_to_change == "attack")
+					{
+
+					}
+					else if ((*item)->attr_to_change == "agility")
+					{
+
+					}
+					else if ((*item)->attr_to_change == "life")
+					{
+
+					}
 				}
 				else
 				{
+					if ((*item)->attr_to_change == "defense")
+					{
 
+					}
+					else if ((*item)->attr_to_change == "attack")
+					{
+
+					}
+					else if ((*item)->attr_to_change == "agility")
+					{
+
+					}
+					else if ((*item)->attr_to_change == "life")
+					{
+
+					}
 				}
 				break; 
 
@@ -215,11 +290,41 @@ bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
 
 				if ((*item)->target == "enemy")
 				{
+					if ((*item)->attr_to_change == "defense")
+					{
 
+					}
+					else if ((*item)->attr_to_change == "attack")
+					{
+
+					}
+					else if ((*item)->attr_to_change == "agility")
+					{
+
+					}
+					else if ((*item)->attr_to_change == "life")
+					{
+
+					}
 				}
 				else
 				{
+					if ((*item)->attr_to_change == "defense")
+					{
 
+					}
+					else if ((*item)->attr_to_change == "attack")
+					{
+
+					}
+					else if ((*item)->attr_to_change == "agility")
+					{
+
+					}
+					else if ((*item)->attr_to_change == "life")
+					{
+
+					}
 				}
 				break; 
 
