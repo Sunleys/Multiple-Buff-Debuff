@@ -52,9 +52,9 @@ class j1BuffDebuff : public j1Module
 
 		bool LoadBuffDebuff(pugi::xml_node& bd_node, Buff* bd);
 
-		bool CheckTypeBuffDebuff(std::string type, std::string name_buff); 
+		bool CheckTypeBuffDebuff(std::string type, std::string name_buff, std::string id_player); 
 
-		bool ApplyBuffAttributes(std::string buff_name);
+		bool ApplyBuffAttributes(std::string buff_name, std::string id_players);
 		bool ApplyBuffItems(std::string buff_name);
 		bool ApplyBuffTerrain(std::string buff_name);
 
@@ -63,6 +63,9 @@ class j1BuffDebuff : public j1Module
 		
 		std::list<Buff*> buffList;
 		Buff* buff_debuff;
+		float startTime; 
+		float repeatTime; 
+		float duration; 
 
 }; 
 

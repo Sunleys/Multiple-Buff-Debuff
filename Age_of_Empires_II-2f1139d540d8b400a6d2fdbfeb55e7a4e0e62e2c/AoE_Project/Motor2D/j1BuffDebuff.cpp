@@ -1,6 +1,6 @@
 #include <sstream> 
+#include <time.h>
 #include "p2Log.h"
-#include "j1Timer.h"
 #include "j1Input.h"
 #include "j1BuffDebuff.h"
 #include "j1App.h"
@@ -113,7 +113,7 @@ bool j1BuffDebuff::CleanUp()
 	return true; 
 }
 
-bool j1BuffDebuff::CheckTypeBuffDebuff(std::string type, std::string name_buff)
+bool j1BuffDebuff::CheckTypeBuffDebuff(std::string type, std::string name_buff, std::string id_player)
 {
 	std::list<Buff*>::iterator item = buffList.begin();
 	while (item != buffList.end())
@@ -122,7 +122,7 @@ bool j1BuffDebuff::CheckTypeBuffDebuff(std::string type, std::string name_buff)
 		{
 			if (type == "attribute")
 			{
-				ApplyBuffAttributes((*item)->buffdebuff_name);
+				ApplyBuffAttributes((*item)->buffdebuff_name, id_player);
 			}
 			else if (type == "item")
 			{
@@ -147,11 +147,11 @@ bool j1BuffDebuff::CheckTypeBuffDebuff(std::string type, std::string name_buff)
 }
 
 
-bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
+bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name, std::string id_players)
 {
-	std::list<j1Player*>::iterator it_player = App->player->playerList.begin();
+	std::list<Info_players*>::iterator it_player = App->player->playerList.begin();
 	std::list<Buff*>::iterator item = buffList.begin();
-	while (item != buffList.end())
+	while (item != buffList.end() && it_player != App->player->playerList.end())
 	{
 		if ((*item)->buffdebuff_name == buff_name)
 		{
@@ -161,42 +161,47 @@ bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
 
 				if ((*item)->target == "enemy")
 				{
-					if ((*item)->attr_to_change == "defense")
+					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
 					{
+						float original_value = (*it_player)->defense; 
+						float val_changed = (*it_player)->defense + (*item)->value; 
+
+						
+
 						// modificat attribute player
 						//inicialitzar temps --> al uptdate de player es controla el temps per treure el debuff
 					}
-					else if ((*item)->attr_to_change == "attack")
+					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->attack += (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "agility")
+					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->agility += (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "life")
+					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->life += (*item)->value;
 					}
 	
 				}
 				else
 				{
-					if ((*item)->attr_to_change == "defense")
+					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->defense += (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "attack")
+					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->attack += (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "agility")
+					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->agility += (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "life")
+					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->life += (*item)->value;
 					}
 				}
 				
@@ -206,127 +211,139 @@ bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
 
 				if ((*item)->target == "enemy")
 				{
-					if ((*item)->attr_to_change == "defense")
+					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->defense -= (*item)->value;
+						// modificat attribute player
+						//inicialitzar temps --> al uptdate de player es controla el temps per treure el debuff
 					}
-					else if ((*item)->attr_to_change == "attack")
+					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->attack -= (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "agility")
+					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->agility -= (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "life")
+					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->life -= (*item)->value;
 					}
+
 				}
 				else
 				{
-					if ((*item)->attr_to_change == "defense")
+					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->defense -= (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "attack")
+					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->attack -= (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "agility")
+					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->agility -= (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "life")
+					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->life -= (*item)->value;
 					}
 				}
-				break; 
+
+				break;
 
 			case(multiply): 
 
 				if ((*item)->target == "enemy")
 				{
-					if ((*item)->attr_to_change == "defense")
+					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->defense *= (*item)->value;
+						// modificat attribute player
+						//inicialitzar temps --> al uptdate de player es controla el temps per treure el debuff
 					}
-					else if ((*item)->attr_to_change == "attack")
+					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->attack *= (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "agility")
+					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->agility *= (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "life")
+					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->life *= (*item)->value;
 					}
+
 				}
 				else
 				{
-					if ((*item)->attr_to_change == "defense")
+					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->defense *= (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "attack")
+					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->attack *= (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "agility")
+					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->agility *= (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "life")
+					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->life *= (*item)->value;
 					}
 				}
-				break; 
+
+				break;
 
 			case(divide): 
 
 				if ((*item)->target == "enemy")
 				{
-					if ((*item)->attr_to_change == "defense")
+					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->defense /= (*item)->value;
+						// modificat attribute player
+						//inicialitzar temps --> al uptdate de player es controla el temps per treure el debuff
 					}
-					else if ((*item)->attr_to_change == "attack")
+					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->attack /= (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "agility")
+					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->agility /= (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "life")
+					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->life /= (*item)->value;
 					}
+
 				}
 				else
 				{
-					if ((*item)->attr_to_change == "defense")
+					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->defense /= (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "attack")
+					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->attack /= (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "agility")
+					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->agility /= (*item)->value;
 					}
-					else if ((*item)->attr_to_change == "life")
+					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
 					{
-
+						(*it_player)->life /= (*item)->value;
 					}
 				}
-				break; 
+
+				break;
 
 			default:
 

@@ -4,6 +4,15 @@
 #include "j1Module.h"
 #include "j1BuffDebuff.h"
 
+struct Info_players
+{
+	std::string id;
+	uint life;
+	int defense;
+	int agility;
+	int attack;
+};
+
 class j1Player : public j1Module
 {
 public:
@@ -29,23 +38,17 @@ public:
 	bool CleanUp();
 	
 	pugi::xml_node LoadXMLPlayers(pugi::xml_document& player_doc);
-	bool ModifyAttributes(float value); 
-	bool AddPlayers(j1Player* player);
-	bool LoadPlayers(pugi::xml_node& node, j1Player* unit);
+	bool ModifyAttributes(std::list<Info_players*>list_player, float value);
+	bool AddPlayers(Info_players* player);
+	bool LoadPlayers(pugi::xml_node& node, Info_players* unit);
 	
-	std::list<j1Player*> playerList;
+	std::list<Info_players*> playerList;
+	
 
 private: 
 
-	std::string id;
-	uint life;
-	int defense;
-	int agility;
-	int attack;
-
 	pugi::xml_node p_node;
-
-	
+	Info_players* info_players;
 };
 
 
