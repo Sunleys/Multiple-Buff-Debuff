@@ -51,12 +51,13 @@ class j1BuffDebuff : public j1Module
 
 		bool LoadBuffDebuff(pugi::xml_node& bd_node, Buff* bd);
 
-		bool CheckTypeBuffDebuff(std::string type); 
+		bool CheckTypeBuffDebuff(std::string type, std::string name_buff); 
 
 		bool ApplyBuffAttributes(std::string buff_name);
 		bool ApplyBuffItems(std::string buff_name);
 		bool ApplyBuffTerrain(std::string buff_name);
 
+		friend j1Player;
 	private: 
 		
 		std::list<Buff*> buffList;

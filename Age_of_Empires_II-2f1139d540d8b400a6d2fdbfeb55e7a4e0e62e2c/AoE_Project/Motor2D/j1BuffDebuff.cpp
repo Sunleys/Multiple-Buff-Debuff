@@ -113,24 +113,24 @@ bool j1BuffDebuff::CleanUp()
 	return true; 
 }
 
-bool j1BuffDebuff::CheckTypeBuffDebuff(std::string type)
+bool j1BuffDebuff::CheckTypeBuffDebuff(std::string type, std::string name_buff)
 {
 	std::list<Buff*>::iterator item = buffList.begin();
 	while (item != buffList.end())
 	{
-		if ((*item)->type == type)
+		if ((*item)->type == type && (*item)->buffdebuff_name == name_buff)
 		{
 			if (type == "attribute")
 			{
-				ApplyBuffAttributes((*item)->buffdebuff_name);//canviar
+				ApplyBuffAttributes((*item)->buffdebuff_name);
 			}
 			else if (type == "item")
 			{
-				ApplyBuffItems((*item)->buffdebuff_name);//canviar
+				ApplyBuffItems((*item)->buffdebuff_name);
 			}
 			else if (type == "terrain")
 			{
-				ApplyBuffTerrain((*item)->buffdebuff_name);//canviar
+				ApplyBuffTerrain((*item)->buffdebuff_name);
 			}
 			else
 			{
@@ -162,8 +162,8 @@ bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
 				if ((*item)->target == "enemy")
 				{
 					
-					//activar el buffo???? bool???
-					//control de temps -  timer 
+
+					
 				}
 				else
 				{

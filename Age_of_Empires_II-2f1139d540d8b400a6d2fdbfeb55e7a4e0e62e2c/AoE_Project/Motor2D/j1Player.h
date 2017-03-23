@@ -33,8 +33,7 @@ public:
 	bool AddPlayers(j1Player* player);
 	bool LoadPlayers(pugi::xml_node& node, j1Player* unit);
 	
-	pugi::xml_node GetConfigPlayer() const;
-	
+
 private: 
 
 	std::string id;

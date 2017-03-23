@@ -120,9 +120,6 @@ bool j1Player::LoadPlayers(pugi::xml_node& node, j1Player* unit)
 	return ret;
 }
 
-pugi::xml_node j1Player::GetConfigPlayer() const
-{
-	return p_node; 
-}
+
 
 
