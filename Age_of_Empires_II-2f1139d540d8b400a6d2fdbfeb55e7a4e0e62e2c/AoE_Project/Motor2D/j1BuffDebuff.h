@@ -48,8 +48,6 @@ class j1BuffDebuff : public j1Module
 
 		// Called each loop iteration
 		bool Update(); 
-		//bool PreUpdate();
-		//bool PostUpdate();
 
 		// Called before quitting
 		bool CleanUp();
