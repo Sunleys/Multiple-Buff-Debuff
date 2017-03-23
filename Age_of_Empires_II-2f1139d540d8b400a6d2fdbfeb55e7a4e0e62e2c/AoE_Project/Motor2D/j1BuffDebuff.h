@@ -57,7 +57,7 @@ class j1BuffDebuff : public j1Module
 		bool ApplyBuffItems(std::string buff_name);
 		bool ApplyBuffTerrain(std::string buff_name);
 
-		friend j1Player;
+	
 	private: 
 		
 		std::list<Buff*> buffList;

@@ -149,7 +149,7 @@ bool j1BuffDebuff::CheckTypeBuffDebuff(std::string type, std::string name_buff)
 
 bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
 {
-	
+	std::list<j1Player*>::iterator it_player = App->player->playerList.begin();
 	std::list<Buff*>::iterator item = buffList.begin();
 	while (item != buffList.end())
 	{
@@ -161,9 +161,24 @@ bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
 
 				if ((*item)->target == "enemy")
 				{
-					
+					/*
+					if ((*item)->attribute == "defense")
+					{
 
-					
+					}
+					else if ((*item)->attribute == "attack")
+					{
+
+					}
+					else if ((*item)->attribute == "agility")
+					{
+
+					}
+					else if ((*item)->attribute == "life")
+					{
+
+					}*/
+	
 				}
 				else
 				{
