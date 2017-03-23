@@ -42,7 +42,6 @@ private:
 	int defense;
 	int agility;
 	int attack;
-	float modifier; 
 
 	pugi::xml_node p_node;
 

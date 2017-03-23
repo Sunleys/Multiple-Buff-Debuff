@@ -103,12 +103,6 @@ bool j1BuffDebuff::Start()
 // Called each loop iteration
 bool j1BuffDebuff::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-	{
-		ApplyBuffAttributes("get_strength");
-		LOG("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA :) ");
-	}
-	
 	return true;
 }
 
@@ -128,15 +122,15 @@ bool j1BuffDebuff::CheckTypeBuffDebuff(std::string type)
 		{
 			if (type == "attribute")
 			{
-				ApplyBuffAttributes((*item)->buffdebuff_name);
+				ApplyBuffAttributes((*item)->buffdebuff_name);//canviar
 			}
 			else if (type == "item")
 			{
-				ApplyBuffItems((*item)->buffdebuff_name);
+				ApplyBuffItems((*item)->buffdebuff_name);//canviar
 			}
 			else if (type == "terrain")
 			{
-				ApplyBuffTerrain((*item)->buffdebuff_name);
+				ApplyBuffTerrain((*item)->buffdebuff_name);//canviar
 			}
 			else
 			{
@@ -155,7 +149,7 @@ bool j1BuffDebuff::CheckTypeBuffDebuff(std::string type)
 
 bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
 {
-	pugi::xml_node atr_node; 
+	
 	std::list<Buff*>::iterator item = buffList.begin();
 	while (item != buffList.end())
 	{
@@ -167,11 +161,7 @@ bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name)
 
 				if ((*item)->target == "enemy")
 				{
-					int value_to_apply = (*item)->value; 
-					char c = (char)value_to_apply; 
-					atr_node = App->player->GetConfigPlayer().child("players").child("player"); 
-					atr_node.attribute("modifier").set_value(c); 
-					//carreguem el valor del xml 
+					
 					//activar el buffo???? bool???
 					//control de temps -  timer 
 				}
