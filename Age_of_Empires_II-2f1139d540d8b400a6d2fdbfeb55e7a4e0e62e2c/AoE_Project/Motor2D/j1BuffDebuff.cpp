@@ -44,10 +44,10 @@ bool j1BuffDebuff::LoadBuffDebuff(pugi::xml_node & bd_node, Buff * bd)
 		pugi::xml_node node_buff;
 
 		ret = true;
-
+		
 		bd->type = bd_node.child("type").attribute("id").as_string();
 		bd->buffdebuff_name = bd_node.child("name").child_value();
-		bd->duration = bd_node.attribute("duration").as_float();
+		bd->timer_duration = bd_node.attribute("timer_duration").as_uint();
 		bd->oper = bd_node.attribute("operator").as_int();
 		bd->value = bd_node.attribute("value").as_float();
 		bd->target = bd_node.attribute("target").as_string();
@@ -164,12 +164,10 @@ bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name, std::string id_pla
 					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
 					{
 						float original_value = (*it_player)->defense; 
-						float val_changed = (*it_player)->defense + (*item)->value; 
-
-						
-
-						// modificat attribute player
-						//inicialitzar temps --> al uptdate de player es controla el temps per treure el debuff
+						(*it_player)->defense += (*item)->value;
+						CreateAppliedBuff(timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+						appliedBuffList.push_back(app_buff);
+						timer.Start();
 					}
 					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
 					{
@@ -369,4 +367,13 @@ bool j1BuffDebuff::ApplyBuffTerrain(std::string buff_name)
 
 
 	return true; 
+}
+
+bool j1BuffDebuff::CreateAppliedBuff(j1Timer timer, uint timer_duration, std::string attr_to_change, std::string id_player_buffed, float original_value)
+{
+	app_buff->timer = timer;
+	app_buff->timer_duration = timer_duration;
+	app_buff->attr_to_change = attr_to_change;
+	app_buff->original_value = original_value;
+	return true;
 }

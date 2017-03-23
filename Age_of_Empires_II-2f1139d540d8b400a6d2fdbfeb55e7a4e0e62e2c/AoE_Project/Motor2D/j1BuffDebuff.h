@@ -1,19 +1,28 @@
 #ifndef __j1BUFFDEBUFF_H__
 #define __j1BUFFDEBUFF_H__
 
+#include "j1Timer.h"
 #include "j1Module.h"
 
 struct Buff
 {
+	uint timer_duration;
 	std::string buffdebuff_name;
 	std::string type; 
 	std::string attr_to_change;
-	float duration;
 	int oper;  //operator
 	float value;
 	std::string target;
 };
 
+struct AppliedBuff
+{
+	j1Timer timer;
+	uint timer_duration;
+	std::string attr_to_change;
+	std::string id_player_buffed;
+	float original_value;
+};
 enum Operators
 {
 	sum = 0,  
@@ -58,15 +67,15 @@ class j1BuffDebuff : public j1Module
 		bool ApplyBuffItems(std::string buff_name);
 		bool ApplyBuffTerrain(std::string buff_name);
 
+		bool CreateAppliedBuff(j1Timer timer, uint timer_duration, std::string attr_to_change, std::string id_player_buffed, float original_value);
 	
 	private: 
 		
 		std::list<Buff*> buffList;
+		std::list<AppliedBuff*> appliedBuffList;
 		Buff* buff_debuff;
-		float startTime; 
-		float repeatTime; 
-		float duration; 
-
+		AppliedBuff* app_buff;
+		j1Timer timer;
 }; 
 
 
