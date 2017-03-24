@@ -94,7 +94,7 @@ typedef enum
     SDL_KEYUP,                  /**< Key released */
     SDL_TEXTEDITING,            /**< Keyboard text editing (composition) */
     SDL_TEXTINPUT,              /**< Keyboard text input */
-	SDL_KEYMAPCHANGED,          /**< Keymap changed due to a system event such as an
+    SDL_KEYMAPCHANGED,          /**< Keymap changed due to a system event such as an
                                      input language or keyboard layout change.
                                 */
 

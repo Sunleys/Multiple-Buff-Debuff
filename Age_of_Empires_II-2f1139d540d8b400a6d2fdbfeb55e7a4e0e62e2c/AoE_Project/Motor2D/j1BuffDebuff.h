@@ -17,14 +17,21 @@ struct Buff
 
 struct AppliedBuff
 {
+	AppliedBuff(uint timer_duration, std::string attr_to_change, std::string id_player_buffed, float original_value)
+	{
+		this->timer_duration = timer_duration;
+		this->attr_to_change = attr_to_change;
+		this->id_player_buffed = id_player_buffed;
+		this->original_value = original_value;
+	}
+
 	j1Timer timer;
 	uint timer_duration;
 	std::string attr_to_change;
 	std::string id_player_buffed;
 	float original_value;
 
-	AppliedBuff(j1Timer timer, uint timer_duration, std::string attr_to_change, std::string id_player_buffed, float original_value): timer(timer), timer_duration(timer_duration), attr_to_change(attr_to_change), id_player_buffed(id_player_buffed), original_value(original_value){}
-
+	
 };
 enum Operators
 {
@@ -52,6 +59,7 @@ class j1BuffDebuff : public j1Module
 		// Called each loop iteration
 		bool Update(); 
 
+		bool PreUpdate();
 		// Called before quitting
 		bool CleanUp();
 	
@@ -74,8 +82,6 @@ class j1BuffDebuff : public j1Module
 		std::list<Buff*> buffList;
 		std::list<AppliedBuff*> appliedBuffList;
 		Buff* buff_debuff;
-		AppliedBuff* app_buff;
-		j1Timer timer;
 }; 
 
 

@@ -45,8 +45,8 @@ bool j1BuffDebuff::LoadBuffDebuff(pugi::xml_node & bd_node, Buff * bd)
 
 		ret = true;
 		
-		bd->type = bd_node.child("type").attribute("id").as_string();
-		bd->buffdebuff_name = bd_node.child("name").child_value();
+		bd->type = bd_node.parent().attribute("id").as_string();
+		bd->buffdebuff_name = bd_node.child_value();
 		bd->timer_duration = bd_node.attribute("timer_duration").as_uint();
 		bd->oper = bd_node.attribute("operator").as_int();
 		bd->value = bd_node.attribute("value").as_float();
@@ -103,12 +103,15 @@ bool j1BuffDebuff::Start()
 // Called each loop iteration
 bool j1BuffDebuff::Update()
 {
-
-	CheckAppliedBuff(appliedBuffList); 
-
 	return true;
 }
 
+bool j1BuffDebuff::PreUpdate()
+{
+	CheckAppliedBuff(appliedBuffList);
+
+	return true;
+}
 
 // Called before quitting
 bool j1BuffDebuff::CleanUp()
@@ -135,9 +138,11 @@ bool j1BuffDebuff::CheckTypeBuffDebuff(std::string type, std::string name_buff, 
 			{
 				LOG("ANY TYPE BUFF DEBUFF :')");
 			}
+			item++;
 		}
 		else
 		{
+			item++;
 			LOG("It doesn't work! =( "); 
 		}
 	}
@@ -148,322 +153,330 @@ bool j1BuffDebuff::CheckTypeBuffDebuff(std::string type, std::string name_buff, 
 
 bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name, std::string id_players)
 {
-	std::list<Info_players*>::iterator it_player = App->player->playerList.begin();
-	std::list<Buff*>::iterator item = buffList.begin();
-	while (item != buffList.end() && it_player != App->player->playerList.end())
-	{
-		if ((*item)->buffdebuff_name == buff_name)
-		{
-			switch ((*item)->oper)
-			{
-			case(sum):
-
-				if ((*item)->target == "enemy")
-				{
-					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->defense; 
-						(*it_player)->defense += (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->attack;
-						(*it_player)->attack += (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->agility;
-						(*it_player)->agility += (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->life;
-						(*it_player)->life += (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
 	
-				}
-				else
+	std::list<Buff*>::iterator item = buffList.begin();
+	while (item != buffList.end())
+	{
+		std::list<Info_players*>::iterator it_player = App->player->playerList.begin();
+		while (it_player != App->player->playerList.end())
+		{
+			if ((*item)->buffdebuff_name == buff_name)
+			{
+				switch ((*item)->oper)
 				{
-					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
+				case(sum) :
+
+					if ((*item)->target == "enemy")
 					{
-						float original_value = (*it_player)->defense;
-						(*it_player)->defense += (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
+						if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->defense;
+							(*it_player)->defense += (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->attack;
+							(*it_player)->attack += (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->agility;
+							(*it_player)->agility += (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->life;
+							(*it_player)->life += (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+
 					}
-					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
+					else
 					{
-						float original_value = (*it_player)->attack;
-						(*it_player)->attack += (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
+						if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->defense;
+							(*it_player)->defense += (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->attack;
+							(*it_player)->attack += (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->agility;
+							(*it_player)->agility += (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->life;
+							(*it_player)->life += (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
 					}
-					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
+
+						  break;
+
+				case(substract) :
+
+					if ((*item)->target == "enemy")
 					{
-						float original_value = (*it_player)->agility;
-						(*it_player)->agility += (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
+						if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->defense;
+							(*it_player)->defense -= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->attack;
+							(*it_player)->attack -= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->agility;
+							(*it_player)->agility -= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->life;
+							(*it_player)->life -= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+
 					}
-					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
+					else
 					{
-						float original_value = (*it_player)->life;
-						(*it_player)->life += (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
+						if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->defense;
+							(*it_player)->defense -= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->attack;
+							(*it_player)->attack -= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->agility;
+							(*it_player)->agility -= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->life;
+							(*it_player)->life -= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
 					}
+
+								break;
+
+				case(multiply) :
+
+					if ((*item)->target == "enemy")
+					{
+						if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->defense;
+							(*it_player)->defense *= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->attack;
+							(*it_player)->attack *= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->agility;
+							(*it_player)->agility *= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->life;
+							(*it_player)->life *= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+					}
+					else
+					{
+						if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->defense;
+							(*it_player)->defense *= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->attack;
+							(*it_player)->attack *= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->agility;
+							(*it_player)->agility *= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->life;
+							(*it_player)->life *= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+					}
+
+							   break;
+
+				case(divide) :
+
+					if ((*item)->target == "enemy")
+					{
+						if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->defense;
+							(*it_player)->defense /= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->attack;
+							(*it_player)->attack /= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->agility;
+							(*it_player)->agility /= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->life;
+							(*it_player)->life /= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+
+					}
+					else
+					{
+						if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->defense;
+							(*it_player)->defense /= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->attack;
+							(*it_player)->attack /= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->agility;
+							(*it_player)->agility /= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+						else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
+						{
+							float original_value = (*it_player)->life;
+							(*it_player)->life /= (*item)->value;
+							AppliedBuff app_buff((*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
+							appliedBuffList.push_back(&app_buff);
+							app_buff.timer.Start();
+						}
+					}
+
+							 break;
+
+				default:
+
+
+					break;
 				}
-				
-				break;
-
-			case(substract):
-
-				if ((*item)->target == "enemy")
-				{
-					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->defense;
-						(*it_player)->defense -= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->attack;
-						(*it_player)->attack -= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->agility;
-						(*it_player)->agility -= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->life;
-						(*it_player)->life -= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-
-				}
-				else
-				{
-					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->defense;
-						(*it_player)->defense -= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->attack;
-						(*it_player)->attack -= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->agility;
-						(*it_player)->agility -= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->life;
-						(*it_player)->life -= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-				}
-
-				break;
-
-			case(multiply): 
-
-				if ((*item)->target == "enemy")
-				{
-					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->defense;
-						(*it_player)->defense *= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->attack;
-						(*it_player)->attack *= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->agility;
-						(*it_player)->agility *= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->life;
-						(*it_player)->life *= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-				}
-				else
-				{
-					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->defense;
-						(*it_player)->defense *= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->attack;
-						(*it_player)->attack *= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->agility;
-						(*it_player)->agility *= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->life;
-						(*it_player)->life *= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-				}
-
-				break;
-
-			case(divide): 
-
-				if ((*item)->target == "enemy")
-				{
-					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->defense;
-						(*it_player)->defense /= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->attack;
-						(*it_player)->attack /= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->agility;
-						(*it_player)->agility /= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->life;
-						(*it_player)->life /= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-
-				}
-				else
-				{
-					if ((*item)->attr_to_change == "defense" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->defense;
-						(*it_player)->defense /= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "attack" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->attack;
-						(*it_player)->attack /= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "agility" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->agility;
-						(*it_player)->agility /= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-					else if ((*item)->attr_to_change == "life" && (*it_player)->id == id_players)
-					{
-						float original_value = (*it_player)->life;
-						(*it_player)->life /= (*item)->value;
-						AppliedBuff (timer, (*item)->timer_duration, (*item)->attr_to_change, id_players, original_value);
-						appliedBuffList.push_back(app_buff);
-						timer.Start();
-					}
-				}
-
-				break;
-
-			default:
-
-				break;
 			}
+			it_player++;
 		}
+		
+		item++;
 	}
 
 	return true; 
@@ -471,12 +484,13 @@ bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name, std::string id_pla
 
 bool j1BuffDebuff::CheckAppliedBuff(std::list<AppliedBuff*> appliedbuffList)
 {
-	std::list<Info_players*>::iterator it_player = App->player->playerList.begin();
+	
 	std::list<AppliedBuff*>::iterator item = appliedBuffList.begin();
 	while (item != appliedBuffList.end())
 	{
 		if ((*item)->timer_duration < (*item)->timer.Read())
 		{
+			std::list<Info_players*>::iterator it_player = App->player->playerList.begin();
 			while (it_player != App->player->playerList.end())
 			{
 				if ((*it_player)->id == (*item)->id_player_buffed)
@@ -501,9 +515,11 @@ bool j1BuffDebuff::CheckAppliedBuff(std::list<AppliedBuff*> appliedbuffList)
 						(*it_player)->life = (*item)->original_value;
 						appliedBuffList.erase(item);
 					}
+					it_player++;
 				}
 			}
 		}
+		item++;
 	}
 
 	return true; 

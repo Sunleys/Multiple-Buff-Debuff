@@ -2,21 +2,21 @@
 <buff_debuff>
 	<buff>
 		<type id="attribute">
-			<name timer_duration="5" operator="0" value="5" target="enemy" attr_to_change="strength"> get_strength </name>
-			<name timer_duration="5" operator="0" value="5" target="enemy" attr_to_change="defense"> get_defense </name>
-			<name timer_duration="5" operator="0" value="5" target="enemy" attr_to_change="agility"> get_agility </name>
-			<name timer_duration="5" operator="1" value="5" target="enemy" attr_to_change="strength"> lose_strength </name>
-			<name timer_duration="5" operator="1" value="5" target="enemy" attr_to_change="defense"> lose_defense </name>
-			<name timer_duration="5" operator="1" value="5" target="enemy" attr_to_change="agility"> lose_agility </name>
+			<name timer_duration="5" operator="0" value="5" target="enemy" attr_to_change="strength">get_agility</name>
+			<name timer_duration="5" operator="0" value="5" target="enemy" attr_to_change="defense">get_defense</name>
+			<name timer_duration="5" operator="0" value="5" target="enemy" attr_to_change="agility">get_strength</name><!--get_agility-->
+			<name timer_duration="5" operator="1" value="5" target="enemy" attr_to_change="strength">lose_strength</name>
+			<name timer_duration="5" operator="1" value="5" target="enemy" attr_to_change="defense">lose_defense</name>
+			<name timer_duration="5" operator="1" value="5" target="enemy" attr_to_change="agility">lose_agility</name>
 		</type>
 		<type id="item">
-			<name timer_duration="5" operator="1" value="5" target="enemy"> get_life </name>
-			<name timer_duration="5" operator="2" value="5" target="enemy"> poison </name>
-			<name timer_duration="5" operator="2" value="5" target="enemy"> get_speed </name>
-			<name timer_duration="5" operator="2" value="5" target="enemy"> lose_speed </name>
+			<name timer_duration="5" operator="1" value="5" target="enemy">get_life</name>
+			<name timer_duration="5" operator="2" value="5" target="enemy">poison</name>
+			<name timer_duration="5" operator="2" value="5" target="enemy">get_speed</name>
+			<name timer_duration="5" operator="2" value="5" target="enemy">lose_speed</name>
 		</type>
 		<type id="terrain">
-			<name height="" width="" timer_duration="5" operator="2" value="5" target=""> area </name>
+			<name height="" width="" timer_duration="5" operator="2" value="5" target="">area</name>
 		</type>
 	</buff>
 </buff_debuff>

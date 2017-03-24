@@ -111,11 +111,11 @@ bool j1Player::LoadPlayers(pugi::xml_node& node, Info_players* unit)
 		pugi::xml_node node_units;
 
 		ret = true;
-		unit->id = node.child("player").attribute("id").as_string();
-		unit->life = node.child("player").attribute("life").as_uint();
-		unit->agility = node.child("player").attribute("agility").as_uint();
-		unit->defense = node.child("player").attribute("defense").as_uint();
-		unit->attack = node.child("player").attribute("attack").as_uint();
+		unit->id = node.attribute("id").as_string();
+		unit->life = node.attribute("life").as_uint();
+		unit->agility = node.attribute("agility").as_uint();
+		unit->defense = node.attribute("defense").as_uint();
+		unit->attack = node.attribute("attack").as_uint();
 
 	}
 	return ret;
