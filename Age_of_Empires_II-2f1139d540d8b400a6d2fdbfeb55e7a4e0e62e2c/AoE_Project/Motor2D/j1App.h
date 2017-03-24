@@ -13,7 +13,6 @@ class j1Render;
 class j1Textures;
 class j1FileSystem;
 class j1Scene;
-class j1Map;
 class j1Fonts;
 class j1Gui;
 class j1Module;
@@ -89,7 +88,6 @@ public:
 	j1Textures*			tex = NULL;
 	j1Scene*			scene = NULL;
 	j1FileSystem*		fs = NULL;
-	j1Map*				map = NULL;
 	j1Fonts*			font = NULL;
 	j1Gui*				gui = NULL;
 	j1BuffDebuff*       buffdebuff = NULL;
