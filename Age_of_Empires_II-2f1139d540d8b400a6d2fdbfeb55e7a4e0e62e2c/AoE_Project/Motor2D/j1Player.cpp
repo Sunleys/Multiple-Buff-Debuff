@@ -32,7 +32,6 @@ bool j1Player::Awake(pugi::xml_node& info)
 				j1Player* unit = new j1Player();
 				ret = LoadPlayers(bd_node, unit);
 				unitList.push_back(unit);
-				//LOG(" BUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUFF DEBUFF %s %d %c %s %s",bd->buffdebuff_name, bd->duration, bd->oper, bd->target, bd->value);
 		}
 	}
 

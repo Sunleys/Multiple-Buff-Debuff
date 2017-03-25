@@ -16,7 +16,7 @@ class j1Scene;
 class j1Fonts;
 class j1Gui;
 class j1Module;
-class j1BuffDebuff; 
+class j1BuffOpt; 
 class j1Player; 
 
 
@@ -90,7 +90,7 @@ public:
 	j1FileSystem*		fs = NULL;
 	j1Fonts*			font = NULL;
 	j1Gui*				gui = NULL;
-	j1BuffDebuff*       buffdebuff = NULL;
+	j1BuffOpt*       buffdebuff = NULL;
 	j1Player*           player = NULL; 
 
 	

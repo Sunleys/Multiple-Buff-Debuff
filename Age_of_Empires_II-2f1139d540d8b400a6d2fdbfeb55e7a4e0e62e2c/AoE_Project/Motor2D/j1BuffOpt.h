@@ -3,9 +3,15 @@
 
 #include "j1Timer.h"
 #include "j1Module.h"
+#include "j1Player.h"
+#include "j1App.h"
+#include "p2Log.h"
+#include "j1FileSystem.h"
 
-struct Buff
+struct Buffs
 {
+	Buffs();
+	Buffs(uint timer_duration, std::string buffdebuff_name, std::string type, std::string attr_to_change, float value) : timer_duration(timer_duration), buffdebuff_name(buffdebuff_name), type(type), attr_to_change(attr_to_change), value(value) {}
 	j1Timer timer;
 	uint timer_duration;
 	std::string buffdebuff_name;
@@ -16,7 +22,7 @@ struct Buff
 	std::string cast;
 };
 
-enum Operators
+enum Opers
 {
 	SUM = 0,
 	SUBSTRACT,
@@ -48,17 +54,19 @@ public:
 	pugi::xml_node LoadXMLBuffDebuff(pugi::xml_document& bd_file) const;
 
 	//Utils
-	bool LoadBuffDebuff(pugi::xml_node& bd_node, Buff* bd);
+	Buffs SearchBuff(std::string buff_name, std::list<Buffs*> buffList);
 
-	//bool ApplyBuff(std::string buff_name, j1PlayerOpt id_players);
+	bool LoadBuffDebuff(pugi::xml_node& bd_node, Buffs* bd);
 
-	bool CheckAppliedBuff(std::list<Buff*> appliedbuffList);
+	bool ApplyBuffs(std::string buff_name, j1Player* target, std::list<Buffs*> buffList);
+
+	bool CheckAppliedBuff(std::list<Buffs*> appliedbuffList);
 
 private:
 
-	std::list<Buff*> buffsList;
-	std::list<Buff*> appliedbuffList;
-	Buff* buff_debuff;
+	std::list<Buffs*> buffsList;
+	std::list<Buffs*> appliedbuffList;
+	Buffs* buffs;
 };
 
 #endif //__j1BUFFOPT_H__

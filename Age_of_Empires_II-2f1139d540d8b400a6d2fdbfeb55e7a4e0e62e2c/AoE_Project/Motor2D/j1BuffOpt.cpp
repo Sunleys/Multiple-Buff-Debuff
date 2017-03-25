@@ -1,9 +1,5 @@
 #include "j1BuffOpt.h"
 
-#include "j1App.h"
-#include "p2Log.h"
-#include "j1FileSystem.h"
-
 j1BuffOpt::j1BuffOpt() : j1Module()
 {
 	name = "buffdebuff";
@@ -27,7 +23,7 @@ bool j1BuffOpt::Awake(pugi::xml_node & info)
 	{
 		for (bd_node = info_buffdebuff.child("buff_debuff").child("buffs").child("name"); bd_node && ret; bd_node = bd_node.next_sibling("name"))
 		{
-				Buff* bd = new Buff();
+				Buffs* bd = new Buffs();
 				ret = LoadBuffDebuff(bd_node, bd);
 				buffsList.push_back(bd);
 		}
@@ -74,7 +70,7 @@ pugi::xml_node j1BuffOpt::LoadXMLBuffDebuff(pugi::xml_document & bd_file) const
 }
 
 
-bool j1BuffOpt::LoadBuffDebuff(pugi::xml_node & bd_node, Buff * bd)
+bool j1BuffOpt::LoadBuffDebuff(pugi::xml_node & bd_node, Buffs * bd)
 {
 	bool ret = false;
 
@@ -95,7 +91,28 @@ bool j1BuffOpt::LoadBuffDebuff(pugi::xml_node & bd_node, Buff * bd)
 	return ret;
 }
 
-bool j1BuffOpt::CheckAppliedBuff(std::list<Buff*> appliedbuffList)
+bool j1BuffOpt::ApplyBuffs(std::string buff_name, j1Player* target, std::list<Buffs*> buffList)
+{
+
+	return true;
+}
+
+Buffs SearchBuff(std::string buff_name, std::list<Buffs*> buffList)
+{
+	
+	std::list<Buffs*>::iterator item = buffList.begin();
+	while (item != buffList.end())
+	{
+		if ((*item)->buffdebuff_name == buff_name)
+		{
+			Buffs ret((*item)->timer_duration,(*item)->buffdebuff_name,(*item)->type, (*item)->attr_to_change, (*item)->value);
+			return ret;
+		}
+		item++;
+	}
+}
+
+bool j1BuffOpt::CheckAppliedBuff(std::list<Buffs*> appliedbuffList)
 {
 	return true;
 }

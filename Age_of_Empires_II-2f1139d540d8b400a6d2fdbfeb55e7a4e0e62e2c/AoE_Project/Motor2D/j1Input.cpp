@@ -4,7 +4,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Gui.h"
-#include "j1BuffDebuff.h"
+#include "j1BuffOpt.h"
 #include "UI_Text_Box.h"
 #include "j1Window.h"
 #include "SDL/include/SDL.h"
@@ -90,7 +90,7 @@ bool j1Input::PreUpdate()
 	//  =') -----------------------------------------------------------------------
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
-		App->buffdebuff->CheckTypeBuffDebuff("attribute", "get_strength", "player1"); 
+		//App->buffdebuff->ApplyBuffs() 
 	}
 
 

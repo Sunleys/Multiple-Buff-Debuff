@@ -1,5 +1,5 @@
 
-<buff_debuff>
+<!--<buff_debuff>
 	<buff>
 		<type id="attribute">
 			<name timer_duration="5" operator="0" value="5" target="enemy" attr_to_change="strength">get_agility</name>
@@ -19,22 +19,19 @@
 			<name height="" width="" timer_duration="5" operator="2" value="5" target="">area</name>
 		</type>
 	</buff>
-</buff_debuff>
-
-
-<!-- Opertator 0 = SUM; 1 = SUBSTRACT; 2 = MULTIPLY; 3 = DIVIDE; 
+</buff_debuff>-->
+<!--Opertator 0 = SUM; 1 = SUBSTRACT; 2 = MULTIPLY; 3 = DIVIDE; --> 
 <buff_debuff>
   <buffs>
-   buffs
+    <!-- buffs-->
     <name type="Buff" timer_duration="5" operator="0" value="2" cast="selfcast" attr_to_change="life">increase_life</name>
     <name type="Buff" timer_duration="10" operator="0" value="8" cast="selfcast" attr_to_change="strength">increase_strenght</name>
     <name type="Buff" timer_duration="8" operator="2" value="3" cast="selfcast" attr_to_change="agility">increase_agility</name>
     <name type="Buff" timer_duration="9" operator="2" value="2" cast="selfcast" attr_to_change="defense">increase_defense</name>
-    debuffs
+    <!--debuffs--> 
     <name type="Debuff" timer_duration="5" operator="1" value="2" cast="selfcast" attr_to_change="life">decrease_life</name>
     <name type="Debuff" timer_duration="5" operator="1" value="5" cast="other" attr_to_change="strength">decrease_strength</name>
     <name type="Debuff" timer_duration="8" operator="3" value="2" cast="selfcast" attr_to_change="agility">decrease_agility</name>
     <name type="Debuff" timer_duration="5" operator="3" value="2" cast="other" attr_to_change="defense">decrease_defense</name>
   </buffs>
 </buff_debuff>
--->
