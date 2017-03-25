@@ -67,6 +67,9 @@
     <ClCompile Include="j1BuffDebuff.cpp">
       <Filter>Develop  ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1BuffOpt.cpp">
+      <Filter>Develop  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -142,6 +145,9 @@
       <Filter>Develop  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1BuffDebuff.h">
+      <Filter>Develop  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1BuffOpt.h">
       <Filter>Develop  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>

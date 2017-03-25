@@ -1,5 +1,4 @@
 #include <sstream> 
-#include <time.h>
 #include "p2Log.h"
 #include "j1Input.h"
 #include "j1BuffDebuff.h"
@@ -153,7 +152,7 @@ bool j1BuffDebuff::CheckTypeBuffDebuff(std::string type, std::string name_buff, 
 
 bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name, std::string id_players)
 {
-	
+	/*
 	std::list<Buff*>::iterator item = buffList.begin();
 	while (item != buffList.end())
 	{
@@ -478,13 +477,13 @@ bool j1BuffDebuff::ApplyBuffAttributes(std::string buff_name, std::string id_pla
 		
 		item++;
 	}
-
+*/
 	return true; 
 }
 
 bool j1BuffDebuff::CheckAppliedBuff(std::list<AppliedBuff*> appliedbuffList)
 {
-	
+	/*
 	std::list<AppliedBuff*>::iterator item = appliedBuffList.begin();
 	while (item != appliedBuffList.end())
 	{
@@ -521,7 +520,7 @@ bool j1BuffDebuff::CheckAppliedBuff(std::list<AppliedBuff*> appliedbuffList)
 		}
 		item++;
 	}
-
+*/
 	return true; 
 }
 

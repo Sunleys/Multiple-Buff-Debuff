@@ -4,15 +4,6 @@
 #include "j1Module.h"
 #include "j1BuffDebuff.h"
 
-struct Info_players
-{
-	std::string id;
-	uint life;
-	int defense;
-	int agility;
-	int attack;
-};
-
 class j1Player : public j1Module
 {
 public:
@@ -37,18 +28,32 @@ public:
 	// Called before quitting
 	bool CleanUp();
 	
-	pugi::xml_node LoadXMLPlayers(pugi::xml_document& player_doc);
-	bool ModifyAttributes(std::list<Info_players*>list_player, float value);
-	bool AddPlayers(Info_players* player);
-	bool LoadPlayers(pugi::xml_node& node, Info_players* unit);
-	
-	std::list<Info_players*> playerList;
-	
+	//Getters
+	std::string GetPlayerId()const { return id; }
+	uint GetPlayerLife()const { return life; }
+	int GetPlayerDefense()const { return defense; }
+	int GetPlayerAgility()const { return agility; }
+	int GetPlayerAttack()const { return attack; }
+	//Setters
+	void SetPlayerLife(uint life) { this->life = life; }
+	void SetPlayerDefense(int defense) { this->defense = defense; }
+	void SetPlayerAgility(uint agility) { this->agility = agility; }
+	void SetPlayerAttack(uint attack) { this->attack = attack; }
 
+	//Utils
+	pugi::xml_node LoadXMLPlayers(pugi::xml_document& player_doc);
+	bool LoadPlayers(pugi::xml_node& node, j1Player* unit);
+	
+	std::list<j1Player*> unitList;
+	
 private: 
+	std::string id;
+	uint life;
+	int defense;
+	int agility;
+	int attack;
 
 	pugi::xml_node p_node;
-	Info_players* info_players;
 };
 
 

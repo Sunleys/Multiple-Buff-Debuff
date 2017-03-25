@@ -29,9 +29,9 @@ bool j1Player::Awake(pugi::xml_node& info)
 		// self-config
 		for (bd_node = info_players.child("players").child("player"); bd_node && ret; bd_node = bd_node.next_sibling("player"))
 		{
-				Info_players* unit = new Info_players();
+				j1Player* unit = new j1Player();
 				ret = LoadPlayers(bd_node, unit);
-				AddPlayers(unit);
+				unitList.push_back(unit);
 				//LOG(" BUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUFF DEBUFF %s %d %c %s %s",bd->buffdebuff_name, bd->duration, bd->oper, bd->target, bd->value);
 		}
 	}
@@ -85,31 +85,13 @@ pugi::xml_node j1Player::LoadXMLPlayers(pugi::xml_document& player_doc)
 }
 
 
-bool j1Player::ModifyAttributes(std::list<Info_players*>list_player, float value)
-{
-
-
-	return true; 
-}
-
-bool j1Player::AddPlayers(Info_players* player)
-{
-	if (player)
-	{
-		this->playerList.push_back(player);
-		return true;
-	}
-	return false;
-}
-
-bool j1Player::LoadPlayers(pugi::xml_node& node, Info_players* unit)
+bool j1Player::LoadPlayers(pugi::xml_node& node, j1Player* unit)
 {
 	bool ret = false;
 
 	if (node && unit)
 	{
 		pugi::xml_node node_units;
-
 		ret = true;
 		unit->id = node.attribute("id").as_string();
 		unit->life = node.attribute("life").as_uint();
