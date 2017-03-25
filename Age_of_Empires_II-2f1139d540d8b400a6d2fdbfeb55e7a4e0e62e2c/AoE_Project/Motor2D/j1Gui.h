@@ -88,7 +88,7 @@ public:
 	UI_Element*			GetActiveScreen();
 	uint				CalculateUpperElement(UI_Element* parent, uint layer = 0);
 
-	//Gui taget funtions
+	//Gui taget functions
 	void				SetDefaultInputTarget(j1Module* target);
 	j1Module*			GetDefaultInputTarget()const;
 };

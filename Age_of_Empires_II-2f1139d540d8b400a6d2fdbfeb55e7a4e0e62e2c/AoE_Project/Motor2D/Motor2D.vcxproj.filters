@@ -67,6 +67,9 @@
     <ClCompile Include="j1BuffOpt.cpp">
       <Filter>Develop  ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="UI_Progress_Bar.cpp">
+      <Filter>Develop  ========\UserInteraface\UI_Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -143,6 +146,9 @@
     </ClInclude>
     <ClInclude Include="j1BuffOpt.h">
       <Filter>Develop  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Progress_Bar.h">
+      <Filter>Develop  ========\UserInteraface\UI_Elements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

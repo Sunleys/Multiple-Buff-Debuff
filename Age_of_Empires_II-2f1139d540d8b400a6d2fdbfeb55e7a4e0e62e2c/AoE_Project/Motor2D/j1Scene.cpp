@@ -36,6 +36,9 @@ bool j1Scene::Start()
 	/*tex_goal = App->tex->Load("textures/goal_texture.png");
 	tex_path = App->tex->Load("textures/path_texture.png");*/
 
+	//btn1->Activate; 
+	//btn1->DrawAt(10, 10); 
+
 	return true;
 }
 
@@ -50,7 +53,8 @@ bool j1Scene::Update(float dt)
 {
 	// Gui Upper Element ---------------------------
 	App->gui->CalculateUpperElement(scene_1_screen);
-
+	
+	
 	return true;
 }
 

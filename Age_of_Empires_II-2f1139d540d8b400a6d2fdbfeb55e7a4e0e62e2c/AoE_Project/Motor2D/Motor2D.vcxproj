@@ -94,6 +94,7 @@
     <ClCompile Include="UI_Button.cpp" />
     <ClCompile Include="UI_Element.cpp" />
     <ClCompile Include="UI_Image.cpp" />
+    <ClCompile Include="UI_Progress_Bar.cpp" />
     <ClCompile Include="UI_Scroll.cpp" />
     <ClCompile Include="UI_String.cpp" />
     <ClCompile Include="UI_Text_Box.cpp" />
@@ -121,6 +122,7 @@
     <ClInclude Include="UI_Button.h" />
     <ClInclude Include="UI_Element.h" />
     <ClInclude Include="UI_Image.h" />
+    <ClInclude Include="UI_Progress_Bar.h" />
     <ClInclude Include="UI_Scroll.h" />
     <ClInclude Include="UI_String.h" />
     <ClInclude Include="UI_Text_Box.h" />
