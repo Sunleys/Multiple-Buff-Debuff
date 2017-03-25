@@ -23,8 +23,7 @@ bool j1BuffOpt::Awake(pugi::xml_node & info)
 	{
 		for (bd_node = info_buffdebuff.child("buff_debuff").child("buffs").child("buff"); bd_node && ret; bd_node = bd_node.next_sibling("buff"))
 		{
-			Buffs* bd = new Buffs(bd_node.attribute("timer_duration").as_int(), bd_node.attribute("name").as_string(), bd_node.attribute("type").as_string(), bd_node.attribute("attr_to_change").as_string(), bd_node.attribute("value").as_float());
-				ret = LoadBuffDebuff(bd_node, bd);
+			Buffs* bd = new Buffs(bd_node.attribute("timer_duration").as_int(), bd_node.attribute("name").as_string(), bd_node.attribute("type").as_string(), bd_node.attribute("attr_to_change").as_string(),bd_node.attribute("operator").as_int() ,bd_node.attribute("value").as_float());
 				buffsList.push_back(bd);
 		}
 	}
@@ -70,26 +69,6 @@ pugi::xml_node j1BuffOpt::LoadXMLBuffDebuff(pugi::xml_document & bd_file) const
 }
 
 
-bool j1BuffOpt::LoadBuffDebuff(pugi::xml_node & bd_node, Buffs * bd)
-{
-	bool ret = false;
-
-	if (bd_node && bd)
-	{
-		pugi::xml_node node_buff;
-
-		ret = true;
-
-		bd->buffdebuff_name = bd_node.child_value();
-		bd->type = bd_node.attribute("type").as_string();
-		bd->timer_duration = bd_node.attribute("timer_duration").as_uint();
-		bd->oper = bd_node.attribute("operator").as_int();
-		bd->value = bd_node.attribute("value").as_float();
-		bd->cast = bd_node.attribute("target").as_string();
-		bd->attr_to_change = bd_node.attribute("attr_to_change").as_string();
-	}
-	return ret;
-}
 
 bool j1BuffOpt::ApplyBuffs(std::string buff_name, j1Player* target, std::list<Buffs*> buffList)
 {
@@ -105,7 +84,7 @@ Buffs SearchBuff(std::string buff_name, std::list<Buffs*> buffList)
 	{
 		if ((*item)->buffdebuff_name == buff_name)
 		{
-			Buffs ret((*item)->timer_duration,(*item)->buffdebuff_name,(*item)->type, (*item)->attr_to_change, (*item)->value);
+			Buffs ret((*item)->timer_duration,(*item)->buffdebuff_name,(*item)->type, (*item)->attr_to_change,(*item)->oper, (*item)->value);
 			return ret;
 		}
 		item++;

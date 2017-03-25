@@ -10,8 +10,7 @@
 
 struct Buffs
 {
-	//Buffs();
-	Buffs(uint timer_duration, std::string buffdebuff_name, std::string type, std::string attr_to_change, float value) : timer_duration(timer_duration), buffdebuff_name(buffdebuff_name), type(type), attr_to_change(attr_to_change), value(value) {}
+	Buffs(uint timer_duration, std::string buffdebuff_name, std::string type, std::string attr_to_change, int oper, float value) : timer_duration(timer_duration), buffdebuff_name(buffdebuff_name), type(type), attr_to_change(attr_to_change), oper(oper), value(value) {}
 	j1Timer timer;
 	uint timer_duration;
 	std::string buffdebuff_name;
@@ -19,7 +18,6 @@ struct Buffs
 	std::string attr_to_change;
 	int oper;  //operator
 	float value;
-	std::string cast;
 };
 
 enum Opers
@@ -55,8 +53,6 @@ public:
 
 	//Utils
 	Buffs SearchBuff(std::string buff_name, std::list<Buffs*> buffList);
-
-	bool LoadBuffDebuff(pugi::xml_node& bd_node, Buffs* bd);
 
 	bool ApplyBuffs(std::string buff_name, j1Player* target, std::list<Buffs*> buffList);
 
