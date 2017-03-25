@@ -21,9 +21,9 @@ bool j1BuffOpt::Awake(pugi::xml_node & info)
 
 	if (bd_info.empty() == false)
 	{
-		for (bd_node = info_buffdebuff.child("buff_debuff").child("buffs").child("name"); bd_node && ret; bd_node = bd_node.next_sibling("name"))
+		for (bd_node = info_buffdebuff.child("buff_debuff").child("buffs").child("buff"); bd_node && ret; bd_node = bd_node.next_sibling("buff"))
 		{
-				Buffs* bd = new Buffs();
+			Buffs* bd = new Buffs(bd_node.attribute("timer_duration").as_int(), bd_node.attribute("name").as_string(), bd_node.attribute("type").as_string(), bd_node.attribute("attr_to_change").as_string(), bd_node.attribute("value").as_float());
 				ret = LoadBuffDebuff(bd_node, bd);
 				buffsList.push_back(bd);
 		}

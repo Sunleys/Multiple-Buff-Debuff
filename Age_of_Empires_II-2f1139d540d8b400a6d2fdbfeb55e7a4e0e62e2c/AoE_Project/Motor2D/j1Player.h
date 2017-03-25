@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "j1BuffDebuff.h"
+#include "UI_Text_Box.h"
 
 class j1Player : public j1Module
 {
@@ -19,7 +20,7 @@ public:
 	bool Start();
 
 	// Called each loop iteration
-	bool Update();
+	bool Update(float dt);
 	
 	bool PreUpdate();
 
@@ -54,6 +55,8 @@ private:
 	int attack;
 
 	pugi::xml_node p_node;
+	UI_Text_Box* txt;
+
 };
 
 

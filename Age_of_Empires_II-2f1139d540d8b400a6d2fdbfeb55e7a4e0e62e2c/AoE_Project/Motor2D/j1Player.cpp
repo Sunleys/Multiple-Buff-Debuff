@@ -2,6 +2,7 @@
 #include "j1FileSystem.h"
 #include "j1App.h"
 #include "p2Log.h"
+#include "j1Input.h"
 
 j1Player::j1Player() : j1Module()
 {
@@ -40,13 +41,19 @@ bool j1Player::Awake(pugi::xml_node& info)
 
 bool j1Player::Start()
 {
+	txt = (UI_Text_Box*)App->gui->GenerateUI_Element(TEXT_BOX);
+	txt->SetText("Attack: 30");
+	txt->SetBoxPosition(300, 300);
+	txt->Activate();
 	return true;
 }
 
-bool j1Player::Update()
+bool j1Player::Update(float dt)
 {
+	if (App->input->GetMouseButtonDown(3) == KEY_DOWN)
+		txt->SetText("Hola Tere :D");
 	
-
+		txt->Draw(true);
 
 	return true;
 }

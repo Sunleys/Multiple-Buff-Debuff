@@ -66,6 +66,11 @@ void ProgressBar::ClearBarField() {
 	*out << "\r" << std::flush;
 }
 
+int ProgressBar::GetConsoleWidth()
+{
+	return 0;
+}
+
 void ProgressBar::Progressed(unsigned long idx_)
 {
 	try {

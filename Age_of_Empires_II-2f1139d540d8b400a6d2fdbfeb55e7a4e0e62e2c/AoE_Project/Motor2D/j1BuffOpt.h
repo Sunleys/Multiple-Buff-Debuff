@@ -10,7 +10,7 @@
 
 struct Buffs
 {
-	Buffs();
+	//Buffs();
 	Buffs(uint timer_duration, std::string buffdebuff_name, std::string type, std::string attr_to_change, float value) : timer_duration(timer_duration), buffdebuff_name(buffdebuff_name), type(type), attr_to_change(attr_to_change), value(value) {}
 	j1Timer timer;
 	uint timer_duration;
