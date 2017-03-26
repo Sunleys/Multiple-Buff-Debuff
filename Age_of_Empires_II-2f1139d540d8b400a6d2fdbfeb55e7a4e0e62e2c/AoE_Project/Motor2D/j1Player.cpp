@@ -41,19 +41,66 @@ bool j1Player::Awake(pugi::xml_node& info)
 
 bool j1Player::Start()
 {
-	txt = (UI_Text_Box*)App->gui->GenerateUI_Element(TEXT_BOX);
-	txt->SetText("Attack: 30");
-	txt->SetBoxPosition(300, 300);
-	txt->Activate();
+	//life
+	txt_life = (UI_Text_Box*)App->gui->GenerateUI_Element(TEXT_BOX);
+	char str_life[256] = "Life: ";
+
+	std::string x = "hello world";
+	std::string value = std::to_string(life);
+	std::string show_life = x + value;
+	char *y = new char[x.length() + 1];
+	strcpy_s(y, 200, show_life.c_str());
+
+	txt_life->SetText(y);
+	txt_life->SetBoxPosition(300, 300);
+	txt_life->Activate();
+
+
+	delete y;
+	//strength
+	txt_strength = (UI_Text_Box*)App->gui->GenerateUI_Element(TEXT_BOX);
+	txt_strength->SetText("Strength: 30");
+	txt_strength->SetBoxPosition(300, 300);
+	txt_strength->Activate();
+
+	//agility
+	txt_agility = (UI_Text_Box*)App->gui->GenerateUI_Element(TEXT_BOX);
+	txt_agility->SetText("Agility: ");
+	txt_agility->SetBoxPosition(300, 300);
+	txt_agility->Activate();
+
+	//defense
+	txt_defense = (UI_Text_Box*)App->gui->GenerateUI_Element(TEXT_BOX);
+	txt_defense->SetText("Defense: 30");
+	txt_defense->SetBoxPosition(300, 300);
+	txt_defense->Activate();
+
+
+
+
+
 	return true;
 }
 
 bool j1Player::Update(float dt)
 {
+
+
+
+
 	if (App->input->GetMouseButtonDown(3) == KEY_DOWN)
-		txt->SetText("Hola Tere :D");
-	
-		txt->Draw(true);
+	{
+		life++;
+		std::string x = "Life: ";
+		std::string value = std::to_string(life);
+		std::string show_life = x + value;
+		char *y = new char[x.length() + 1];
+		strcpy_s(y, 200, show_life.c_str());
+
+		txt_life->SetText(y);
+		delete y;
+	}
+		txt_life->Draw(true);
 
 	return true;
 }

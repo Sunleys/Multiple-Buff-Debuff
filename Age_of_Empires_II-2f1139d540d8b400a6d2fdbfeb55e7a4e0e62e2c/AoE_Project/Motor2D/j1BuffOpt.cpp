@@ -24,7 +24,7 @@ bool j1BuffOpt::Awake(pugi::xml_node & info)
 		for (bd_node = info_buffdebuff.child("buff_debuff").child("buffs").child("buff"); bd_node && ret; bd_node = bd_node.next_sibling("buff"))
 		{
 			Buffs* bd = new Buffs(bd_node.attribute("timer_duration").as_int(), bd_node.attribute("name").as_string(), bd_node.attribute("type").as_string(), bd_node.attribute("attr_to_change").as_string(),bd_node.attribute("operator").as_int() ,bd_node.attribute("value").as_float());
-				buffsList.push_back(bd);
+			buffsList.push_back(bd);
 		}
 	}
 
@@ -227,7 +227,7 @@ bool j1BuffOpt::ApplyBuffs(std::string buff_name, j1Player* target, std::list<Bu
 	return true;
 }
 
-Buffs* SearchBuff(std::string buff_name, std::list<Buffs*> buffList)
+Buffs* j1BuffOpt::SearchBuff(std::string buff_name, std::list<Buffs*> buffList)
 {
 	
 	std::list<Buffs*>::iterator item = buffList.begin();

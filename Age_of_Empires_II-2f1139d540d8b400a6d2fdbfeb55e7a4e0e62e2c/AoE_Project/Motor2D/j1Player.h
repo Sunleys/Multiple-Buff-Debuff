@@ -49,14 +49,16 @@ public:
 	
 private: 
 	std::string id;
-	uint life;
+	uint life = 50;
 	int defense;
 	int agility;
 	int attack;
 
 	pugi::xml_node p_node;
-	UI_Text_Box* txt;
-
+	UI_Text_Box* txt_life;
+	UI_Text_Box* txt_strength; 
+	UI_Text_Box* txt_agility;
+	UI_Text_Box* txt_defense;
 };
 
 

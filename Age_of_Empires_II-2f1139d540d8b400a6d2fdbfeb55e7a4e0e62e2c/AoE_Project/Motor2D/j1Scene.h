@@ -55,11 +55,6 @@ private:
 	UI_Text_Box*	text_box;
 	UI_Button*		button;
 
-	//UI Research
-	UI_Button*      btn1; 
-	UI_Button*		btn2; 
-	UI_Button*		btn3; 
-	UI_Button*		btn4; 
 
 public:
 
