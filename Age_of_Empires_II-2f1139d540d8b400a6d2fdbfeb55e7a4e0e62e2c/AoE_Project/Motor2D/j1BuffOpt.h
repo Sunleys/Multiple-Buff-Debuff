@@ -52,16 +52,16 @@ public:
 	pugi::xml_node LoadXMLBuffDebuff(pugi::xml_document& bd_file) const;
 
 	//Utils
-	Buffs SearchBuff(std::string buff_name, std::list<Buffs*> buffList);
+	Buffs* SearchBuff(std::string buff_name, std::list<Buffs*> buffList);
 
 	bool ApplyBuffs(std::string buff_name, j1Player* target, std::list<Buffs*> buffList);
 
 	bool CheckAppliedBuff(std::list<Buffs*> appliedbuffList);
 
-private:
-
 	std::list<Buffs*> buffsList;
 	std::list<Buffs*> appliedbuffList;
+
+private:
 	Buffs* buffs;
 };
 
