@@ -11,13 +11,17 @@
 struct Buffs
 {
 	Buffs(uint timer_duration, std::string buffdebuff_name, std::string type, std::string attr_to_change, int oper, float value) : timer_duration(timer_duration), buffdebuff_name(buffdebuff_name), type(type), attr_to_change(attr_to_change), oper(oper), value(value) {}
-	j1Timer timer;
+	//Buff characteristics
 	uint timer_duration;
 	std::string buffdebuff_name;
 	std::string type;
 	std::string attr_to_change;
 	int oper;  //operator
 	float value;
+	//utils
+	j1Timer timer;
+	j1Player* target;
+	bool buff_active = false;
 };
 
 enum Opers

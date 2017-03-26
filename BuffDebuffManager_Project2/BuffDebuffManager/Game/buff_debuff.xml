@@ -25,7 +25,7 @@
   <buffs>
     <!-- buffs-->
     <buff type="Buff" timer_duration="5" operator="0" value="2" attr_to_change="life" name="increase_life"></buff>
-    <buff type="Buff" timer_duration="10" operator="0" value="8" attr_to_change="strength" name="increase_strenght"></buff>
+    <buff type="Buff" timer_duration="10" operator="0" value="8" attr_to_change="strength" name="increase_strength"></buff>
     <buff type="Buff" timer_duration="8" operator="2" value="3" attr_to_change="agility" name="increase_agility"></buff>
     <buff type="Buff" timer_duration="9" operator="2" value="2" attr_to_change="defense" name="increase_defense"></buff>
     <!--debuffs--> 

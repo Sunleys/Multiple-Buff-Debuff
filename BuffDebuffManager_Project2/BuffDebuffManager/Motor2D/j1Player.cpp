@@ -2,7 +2,9 @@
 #include "j1FileSystem.h"
 #include "j1App.h"
 #include "p2Log.h"
+#include "j1BuffOpt.h"
 #include "j1Input.h"
+#include "SDL/include/SDL.h"
 
 j1Player::j1Player() : j1Module()
 {
@@ -84,9 +86,12 @@ bool j1Player::Start()
 
 bool j1Player::Update(float dt)
 {
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	{
+		App->buffdebuff->ApplyBuffs("increase_strength", unitList.front(), App->buffdebuff->buffsList);
+	}
 
-
-
+	App->buffdebuff->CheckAppliedBuff(App->buffdebuff->appliedbuffList);
 
 	if (App->input->GetMouseButtonDown(3) == KEY_DOWN)
 	{
