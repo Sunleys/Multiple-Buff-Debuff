@@ -20,10 +20,12 @@ As second step to implement our buff and debuff manager we need somewhere to man
 
 ### Struct Buffs
 
-As you can see in the follow picture we have the same attributes explained before in  the XML but also some other new ones that will help us to apply correctly all the buffs. j1Timer is who will help us to keep control to the time, j1Player will give us the info necesary to change the attributes needed to our target and finally last bool will help us to now if the buff is active or not we did it because we don't want that the same buff stack without control. To end this introduction we did a constructor inside of the struct to avoid implement a method to load the xml and load all more eficiently in the awake method of our buff module. 
+As you can see in the follow picture we have the same attributes explained before in  the XML but also some other new ones that will help us to apply correctly all the buffs. j1Timer is who will help us to keep control to the time, j1Player will give us the info necesary to change the attributes needed to our target and finally last bool will help us to now if the buff is active or not we did it because we don't want that the same buff stack without control. To end this introduction we did a constructor inside of the struct to avoid implement a method to load the xml and load all more eficiently in the awake method of our buff module.
+
 ![Buffs struct](http://subirimagen.me/uploads/20170326204221.PNG)
 
 Next we will explain these methods and why we will use it. Keep in mind we are talking about a basic structure of buff debuff manager, and this format can be implemented in many ways to adapt you're code as you want. In our case we will be able to acces to the attributes of a class player and this attributes are the ones we aim to change using this module through our buffs. As we explained before all buff will be load in a stl list from the xml. but also we will need a method to keep an eye on those buffs that will be applied. The other one's like applybuff, searchbuff and chekapplied buffs will be explained with more detail in next step. 
+
 ![principal buff methods](http://subirimagen.me/uploads/20170326214453.PNG)
 
 ### Buff module important methods
@@ -32,6 +34,7 @@ ApplyBuffs will be the method that will be use as a trigger in whatever place of
 Going in more detail on this method: We recive two paremeters, one is the name of the buff, and the other one is a pointer to our player/target or whatever that we will change the values of their atributes. In our case it's a player. Once we have these two entries with the name we will iterate the list of buffs and take a pointer to the buff we want to apply. Now we have our beloved buff and the target the next step is to implement a way to apply the buff. 
 Here is where all those attributes created on the XML file enters to the game. This part can be confusing so we are going to explain the best way we can. Now we need to make sure what kind of buff we have so we can apply the correct formula. First of all we need a switch so we now what kind of operation we want to use. Next is make sure what attribute we need to change. And now with these two steps we can apply the modification. 
 But before end we have to make sure of the most important part, we want a system that handles multiples buff so this part of code cant stop here and waits to the duration of buff to finish. To resolve this problem we will use those usefull attributes told before on the Buffs struct. First we need to add our target on the buff set the buff active, then add this buff to the applied buff list and starts the timer. With this implementation and the method check applied buff we can follow the timer and make sure to erase the efect when it's needed. Remember to use the method compare for the std::strings. 
+
 ![ApplyBuffs](http://subirimagen.me/uploads/20170326221441.PNG)
 
 ### Final Step
