@@ -11,10 +11,16 @@ In our case we are implementing a basic structure of a multiple buff debuff mana
 ### XML handle
 In case you need some help in XML format we are using pugi xml and here you can find a link to a quick start into pugi: [xml pugi page](http://pugixml.org/docs/quickstart.html)
 
-As you can see in the picture this is the way we organize our XML file to handle the buffs and debuffs the way we want.
-[XML Picture](http://subirimagen.me/uploads/20170326202502.PNG)
+As you can see in the picture this is the way we organize our XML file to handle the buffs and debuffs the way we want. The most important part of this are the operator, timer_duration, attibute_to_change and the value. This four attributes of the XML file give us the information necessary to apply the buff or debuff to whatever attribute we want to change. 
+![XML Picture](http://subirimagen.me/uploads/20170326202502.PNG)
 
-### Buff & Debuff 
+### Buff & Debuff Module
+
+As second step to implement our buff and debuff manager we need somewhere to manage all the data, variations or changes that will happen. So we will implement our module class where you will be able to do and undo what you want to your buffs. In our case we implemented a struct named buffs a list of buffs and applied buffs to keep an eye on them everytime we submit some changes to the player.
+
+### Struct Buffs
+
+![Buffs struct](http://subirimagen.me/uploads/20170326204221.PNG)
 
 #### World of Warcraft ([official website](https://worldofwarcraft.com/es-es/))
 Priests in World of Warcraft provide many, including resurrection. Most spellcasters have at least one buff spell.
