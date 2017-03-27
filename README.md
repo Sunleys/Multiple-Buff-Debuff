@@ -2,28 +2,19 @@
 
 ## Introduction 
 
+We are a couple of student who will present you a research about how to handle a multiple buff & debuff manager in c++. During the next lines we will pass throught all the concepts and minimum requeriments to be able to implement this code. We will use XML files, STL list as a container and some UI elements to get a better visual aspect.
 
-### Generic examples of common buffs
-- Ability Up:
-  - Whether it's Strength, Speed, Defense, Magic, or other stats, this will grant the recipient of these spells a temporary flat increase to that stat, thus improving the results of all internal calculations derived from it (be it damage, healing, accuracy, or so on). In some games, this is an "official" buff that can be neutralized by a Status-Buff Dispel. In some games, there may be just one of these (usually for Attack), while in others, they may be absent, except for increasing levels of Agility Up/Down.
-Many games that have the Ability Up buff will also have a corresponding Ability Down as the negative counterpart, and the two may cancel each other out.
+If you're here we understand that you know already what is a buff or a debuff but in any case we will explain it so you can have a clear vision on them. Buff or Debuff it's a modification to an attribute of any kind to a unit. In most of the games are usually to our main character but we also can apply to the enemies. We can see it as an ability, potion or any type of expression that game designer's and programmers decide to implement. 
 
-- Reflect:
-  - Causes spells or attacks to deflect off of the intended target and hit something else instead, usually a member of the opposite party. In some cases, this makes no distinction between friendly or hostile magic: If you cast Reflect on an opponent, any attempts by them to cast recovery spells or status buffs of their own may bounce onto you instead. Most spells will only reflect once before they strike the target.
-  
-- Haste:
-  - Speeds up the character. This is distinct from a Speed buff as listed above: Whereas a Speed buff will improve internal calculations (say, accuracy and evasion) derived from one's Speed (and, depending on the game, may modify turn order), Haste actually multiplies the number of turns or actions the character is given during battle. In games featuring a "Slow" status effect, the two will usually cancel each other out.
-  
-- Regeneration: 
-  - Slowly restores a character's HP. In turn-based games, it will heal a set amount of HP every turn. Although it's the polar opposite of Poison, it doesn't usually directly cancel poison out; rather, both effects go at the same time, which may or may not even out depending on the game.
-  
-- Charge / Focus: 
-  - Increases the effect of the next attack or spell used. Many of these are self-used, effectively using two turns/actions for a single, stronger attack (which, depending on the game rules and opponent's defensive strength, can be more effective than two regular attacks).
-  
-- Protect:
-  - Reduces damage taken, often by a specific source. Many games have variations on this for different types of damage (e.g. physical or magic), and some even going as far as having Protect spells against individual elements. A partial reflect may or may not be built in.</br>
+In our case we are implementing a basic structure of a multiple buff debuff manager. The type of buff/debuff we are doing are applicable during a certain amount of time and the same buff can't stack.
 
-### Buff & Debuff applied in different videogames / games 
+### XML handle
+In case you need some help in XML format we are using pugi xml and here you can find a link to a quick start into pugi: [xml pugi page](http://pugixml.org/docs/quickstart.html)
+
+As you can see in the picture this is the way we organize our XML file to handle the buffs and debuffs the way we want.
+[XML Picture](http://subirimagen.me/uploads/20170326202502.PNG)
+
+### Buff & Debuff 
 
 #### World of Warcraft ([official website](https://worldofwarcraft.com/es-es/))
 Priests in World of Warcraft provide many, including resurrection. Most spellcasters have at least one buff spell.
