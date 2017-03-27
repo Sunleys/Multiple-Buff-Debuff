@@ -19,52 +19,22 @@ As you can see in the picture this is the way we organize our XML file to handle
 As second step to implement our buff and debuff manager we need somewhere to manage all the data, variations or changes that will happen. So we will implement our module class where you will be able to do and undo what you want to your buffs. In our case we implemented a struct named buffs a list of buffs and applied buffs to keep an eye on them everytime we submit some changes to the player.
 
 ### Struct Buffs
-As you can see in the follow picture we have the same attributes explained before in  the XML but also some other attributes that will help us to apply correctly all the buffs. 
+As you can see in the follow picture we have the same attributes explained before in  the XML but also some other new ones that will help us to apply correctly all the buffs. j1Timer is who will help us to keep control to the time, j1Player will give us the info necesary to change the attributes needed to our target and finally last bool will help us to now if the buff is active or not we did it because we don't want that the same buff stack without control. To end this introduction we did a constructor inside of the struct to avoid implement a method to load the xml and load all more eficiently in the awake method of our buff module. 
 ![Buffs struct](http://subirimagen.me/uploads/20170326204221.PNG)
 
-#### World of Warcraft ([official website](https://worldofwarcraft.com/es-es/))
-Priests in World of Warcraft provide many, including resurrection. Most spellcasters have at least one buff spell.
-Even Warriors and Rogues have some buff effects, although those are largely self-targeting abilities.
-Druids are also notable for having no less than 3 types of Regeneration buffs. A normal one, one with an instant effect at the beginning, and one with an instant effect when it expires.
-
-#### Warcraft III ([official website](http://eu.blizzard.com/es-es/games/war3/))
-Many unit types in Warcraft III, especially the unique hero units, have buffs and auras that aid their subordinates in battle.
-
-#### Diablo II ([official website](http://eu.blizzard.com/es-es/games/d2/))
-Paladins in Diablo II were a lackluster fighter class at high levels, but were valued for their auras and healing abilities. This was later changed, while paladin auras were still beneficial to their parties, paladins are able to be extremely effective in melee (zealots and smiters, which is one of the best builds for killing the hardest bosses) and as casters (hammerdins, a very popular build for rushing, power leveling, and farming) in their own right.
-
-#### Minecraft ([official website](https://minecraft.net/es-es/))
-Minecraft has several status buffs that are obtained from potions and using beacons. The stronger the buff, the more potent it is and they can be used on friends and foes alike:</br>
-. _Regeneration_: Restores health over time.</br>
-. _Speed Boost_: Walk and run faster. </br>
-. _Strength_: Damage output is boosted. </br>
-. _Resistance_: Increased defense. </br>
-. _Fire Resistance_: Immunity to fire and lava. </br>
-. _Night Vision_: All dark areas are lit up, though they are not actually filled with light, thus monsters can still spawn. </br>
-. _Water Breathing_: Super Not-Drowning Skills plus improved vision underwater.</br>
-. _Invisibility_: Exactly What It Says on the Tin, except for items carried and armor pieces worn.</br>
-. _Haste_: Mine blocks faster.</br>
-. _Health Boost_: Temporarily increases your maximum health.</br>
+Next we will explain these methods and why we will use it. Keep in mind we are talking about a basic structure of buff debuff manager, and this format can be implemented in many ways to adapt you're code as you want. In our case we will be able to acces to the attributes of a class player and this attributes are the ones we aim to change using this module through our buffs. As we explained before all buff will be load in a stl list from the xml. but also we will need a method to keep an eye on those buffs that will be applied. The other one's like applybuff, searchbuff and chekapplied buffs will be explained with more detail in next step. 
+![principal buff methods](http://subirimagen.me/uploads/20170326214453.PNG)
 
 
-## Introduction to the problem
-
-## Description in detail for the selected approach
-
-aqui tot 
 
 ## Links to more documentation
 
 ## TODOs
 
-## Optional Homework for practicing
-
-no cal oi ? 
 
 ## Explanation of any other improvements on the system
 
-millores
-clasificacio buff debuff amb la etiqueta del tipus 
+
 
 ### Markdown
 
