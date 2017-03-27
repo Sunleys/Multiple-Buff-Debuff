@@ -19,7 +19,7 @@ As you can see in the picture this is the way we organize our XML file to handle
 As second step to implement our buff and debuff manager we need somewhere to manage all the data, variations or changes that will happen. So we will implement our module class where you will be able to do and undo what you want to your buffs. In our case we implemented a struct named buffs a list of buffs and applied buffs to keep an eye on them everytime we submit some changes to the player.
 
 ### Struct Buffs
-
+As you can see in the follow picture we have the same attributes explained before in  the XML but also some other attributes that will help us to apply correctly all the buffs. 
 ![Buffs struct](http://subirimagen.me/uploads/20170326204221.PNG)
 
 #### World of Warcraft ([official website](https://worldofwarcraft.com/es-es/))
