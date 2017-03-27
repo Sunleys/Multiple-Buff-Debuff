@@ -23,7 +23,7 @@ bool j1BuffOpt::Awake(pugi::xml_node & info)
 	{
 		for (bd_node = info_buffdebuff.child("buff_debuff").child("buffs").child("buff"); bd_node && ret; bd_node = bd_node.next_sibling("buff"))
 		{
-			Buffs* bd = new Buffs(bd_node.attribute("timer_duration").as_int(), bd_node.attribute("name").as_string(), bd_node.attribute("type").as_string(), bd_node.attribute("attr_to_change").as_string(),bd_node.attribute("operator").as_int() ,bd_node.attribute("value").as_float());
+			Buffs* bd = new Buffs(bd_node.attribute("timer_duration").as_int(), bd_node.attribute("name").as_string(), bd_node.attribute("type").as_string(), bd_node.attribute("attr_to_change").as_string(),bd_node.attribute("operator").as_int() ,bd_node.attribute("value").as_uint());
 			buffsList.push_back(bd);
 		}
 	}
@@ -70,245 +70,310 @@ pugi::xml_node j1BuffOpt::LoadXMLBuffDebuff(pugi::xml_document & bd_file) const
 
 
 
-bool j1BuffOpt::ApplyBuffs(std::string buff_name, j1Player* target, std::list<Buffs*> buffsList_toSearch)
+bool j1BuffOpt::ApplyBuffs(std::string buff_name, j1Player * target)
 {
-	
-	Buffs* buff_to_apply = SearchBuff(buff_name, buffsList_toSearch);
+	Buffs* buff_to_apply = SearchBuff(buff_name);
 	if (buff_to_apply->buff_active == false)
 	{
 		switch (buff_to_apply->oper)
 		{
 		case SUM:
+			if (buff_to_apply->attr_to_change.compare("life") == 0)
+			{
+				target->SetPlayerLife(target->GetPlayerLife() + buff_to_apply->value);
+				buff_to_apply->timer.Start();
+				buff_to_apply->buff_active = true;
+				buff_to_apply->target = target;
+				appliedbuffList.push_back(buff_to_apply);
 
-			if (buff_to_apply->attr_to_change == "life")
-			{
-				int original_value = target->GetPlayerLife();
-				target->SetPlayerLife(buff_to_apply->value + original_value);
-				buff_to_apply->value = original_value;
-				buff_to_apply->target = target;
-				appliedbuffList.push_back(buff_to_apply);
-				buff_to_apply->timer.Start();
-				buff_to_apply->buff_active = true;
-			}
-			else if (buff_to_apply->attr_to_change == "strength")
-			{
-				int original_value = target->GetPlayerAttack();
-				target->SetPlayerAttack(buff_to_apply->value + original_value);
-				buff_to_apply->value = original_value;
-				buff_to_apply->target = target;
-				appliedbuffList.push_back(buff_to_apply);
-				buff_to_apply->timer.Start();
-				buff_to_apply->buff_active = true;
-			}
-			else if (buff_to_apply->attr_to_change == "agility")
-			{
-				int original_value = target->GetPlayerAgility();
-				target->SetPlayerAgility(buff_to_apply->value + original_value);
-				buff_to_apply->value = original_value;
-				buff_to_apply->target = target;
-				appliedbuffList.push_back(buff_to_apply);
-				buff_to_apply->timer.Start();
-				buff_to_apply->buff_active = true;
-			}
-			else if (buff_to_apply->attr_to_change == "defense")
-			{
-				int original_value = target->GetPlayerDefense();
-				target->SetPlayerDefense(buff_to_apply->value + original_value);
-				buff_to_apply->value = original_value;
-				buff_to_apply->target = target;
-				appliedbuffList.push_back(buff_to_apply);
-				buff_to_apply->timer.Start();
-				buff_to_apply->buff_active = true;
 			}
 
+			else if (buff_to_apply->attr_to_change.compare("strength") == 0)
+			{
+				target->SetPlayerAttack(target->GetPlayerAttack() + buff_to_apply->value);
+				buff_to_apply->timer.Start();
+				buff_to_apply->buff_active = true;
+				buff_to_apply->target = target;
+				appliedbuffList.push_back(buff_to_apply);
+			}
+
+			else if (buff_to_apply->attr_to_change.compare("agility") == 0)
+			{
+				target->SetPlayerAgility(target->GetPlayerAgility() + buff_to_apply->value);
+				buff_to_apply->timer.Start();
+				buff_to_apply->buff_active = true;
+				buff_to_apply->target = target;
+				appliedbuffList.push_back(buff_to_apply);
+			}
+
+			else if (buff_to_apply->attr_to_change.compare("defense") == 0)
+			{
+				target->SetPlayerDefense(target->GetPlayerDefense() + buff_to_apply->value);
+				buff_to_apply->timer.Start();
+				buff_to_apply->buff_active = true;
+				buff_to_apply->target = target;
+				appliedbuffList.push_back(buff_to_apply);
+			}
 			break;
 
 		case SUBSTRACT:
+			if (buff_to_apply->attr_to_change.compare("life") == 0)
+			{
+				target->SetPlayerLife(target->GetPlayerLife() - buff_to_apply->value);
+				buff_to_apply->timer.Start();
+				buff_to_apply->buff_active = true;
+				buff_to_apply->target = target;
+				appliedbuffList.push_back(buff_to_apply);
+			}
 
-			if (buff_to_apply->attr_to_change == "life")
+			else if (buff_to_apply->attr_to_change.compare("strength") == 0)
 			{
-				int original_value = target->GetPlayerLife();
-				target->SetPlayerLife(original_value - buff_to_apply->value);
-				buff_to_apply->value = original_value;
-				buff_to_apply->target = target;
-				appliedbuffList.push_back(buff_to_apply);
+				target->SetPlayerAttack(target->GetPlayerAttack() - buff_to_apply->value);
 				buff_to_apply->timer.Start();
 				buff_to_apply->buff_active = true;
+				buff_to_apply->target = target;
+				appliedbuffList.push_back(buff_to_apply);
 			}
-			else if (buff_to_apply->attr_to_change == "strength")
+
+			else if (buff_to_apply->attr_to_change.compare("agility") == 0)
 			{
-				int original_value = target->GetPlayerAttack();
-				target->SetPlayerAttack(original_value - buff_to_apply->value);
-				buff_to_apply->value = original_value;
-				buff_to_apply->target = target;
-				appliedbuffList.push_back(buff_to_apply);
+				target->SetPlayerAgility(target->GetPlayerAgility() - buff_to_apply->value);
 				buff_to_apply->timer.Start();
 				buff_to_apply->buff_active = true;
+				buff_to_apply->target = target;
+				appliedbuffList.push_back(buff_to_apply);
 			}
-			else if (buff_to_apply->attr_to_change == "agility")
+
+			else if (buff_to_apply->attr_to_change.compare("defense") == 0)
 			{
-				int original_value = target->GetPlayerAgility();
-				target->SetPlayerAgility(original_value - buff_to_apply->value);
-				buff_to_apply->value = original_value;
-				buff_to_apply->target = target;
-				appliedbuffList.push_back(buff_to_apply);
+				target->SetPlayerDefense(target->GetPlayerDefense() - buff_to_apply->value);
 				buff_to_apply->timer.Start();
 				buff_to_apply->buff_active = true;
-			}
-			else if (buff_to_apply->attr_to_change == "defense")
-			{
-				int original_value = target->GetPlayerDefense();
-				target->SetPlayerDefense(original_value - buff_to_apply->value);
-				buff_to_apply->value = original_value;
 				buff_to_apply->target = target;
 				appliedbuffList.push_back(buff_to_apply);
-				buff_to_apply->timer.Start();
-				buff_to_apply->buff_active = true;
 			}
 			break;
 
 		case MULTIPLY:
-			if (buff_to_apply->attr_to_change == "life")
+
+			if (buff_to_apply->attr_to_change.compare("life") == 0)
 			{
-				int original_value = target->GetPlayerLife();
-				target->SetPlayerLife(original_value * buff_to_apply->value);
-				buff_to_apply->value = original_value;
-				buff_to_apply->target = target;
-				appliedbuffList.push_back(buff_to_apply);
+				target->SetPlayerLife(target->GetPlayerLife() * buff_to_apply->value);
 				buff_to_apply->timer.Start();
 				buff_to_apply->buff_active = true;
-			}
-			else if (buff_to_apply->attr_to_change == "strength")
-			{
-				int original_value = target->GetPlayerAttack();
-				target->SetPlayerAttack(original_value * buff_to_apply->value);
-				buff_to_apply->value = original_value;
 				buff_to_apply->target = target;
 				appliedbuffList.push_back(buff_to_apply);
-				buff_to_apply->timer.Start();
-				buff_to_apply->buff_active = true;
-			}
-			else if (buff_to_apply->attr_to_change == "agility")
-			{
-				int original_value = target->GetPlayerAgility();
-				target->SetPlayerAgility(original_value * buff_to_apply->value);
-				buff_to_apply->value = original_value;
-				buff_to_apply->target = target;
-				appliedbuffList.push_back(buff_to_apply);
-				buff_to_apply->timer.Start();
-				buff_to_apply->buff_active = true;
-			}
-			else if (buff_to_apply->attr_to_change == "defense")
-			{
-				int original_value = target->GetPlayerDefense();
-				target->SetPlayerDefense(original_value * buff_to_apply->value);
-				buff_to_apply->value = original_value;
-				buff_to_apply->target = target;
-				appliedbuffList.push_back(buff_to_apply);
-				buff_to_apply->timer.Start();
-				buff_to_apply->buff_active = true;
 			}
 
+			else if (buff_to_apply->attr_to_change.compare("strength") == 0)
+			{
+				target->SetPlayerAttack(target->GetPlayerAttack() * buff_to_apply->value);
+				buff_to_apply->timer.Start();
+				buff_to_apply->buff_active = true;
+				buff_to_apply->target = target;
+				appliedbuffList.push_back(buff_to_apply);
+			}
+
+			else if (buff_to_apply->attr_to_change.compare("agility") == 0)
+			{
+				target->SetPlayerAgility(target->GetPlayerAgility() * buff_to_apply->value);
+				buff_to_apply->timer.Start();
+				buff_to_apply->buff_active = true;
+				buff_to_apply->target = target;
+				appliedbuffList.push_back(buff_to_apply);
+			}
+
+			else if (buff_to_apply->attr_to_change.compare("defense") == 0)
+			{
+				target->SetPlayerDefense(target->GetPlayerDefense() * buff_to_apply->value);
+				buff_to_apply->timer.Start();
+				buff_to_apply->buff_active = true;
+				buff_to_apply->target = target;
+				appliedbuffList.push_back(buff_to_apply);
+			}
 			break;
 
 		case DIVIDE:
-			if (buff_to_apply->attr_to_change == "life")
+			if (buff_to_apply->attr_to_change.compare("life") == 0)
 			{
-				int original_value = target->GetPlayerLife();
-				target->SetPlayerLife(original_value / buff_to_apply->value);
-				buff_to_apply->value = original_value;
-				buff_to_apply->target = target;
-				appliedbuffList.push_back(buff_to_apply);
+				target->SetPlayerLife(target->GetPlayerLife() / buff_to_apply->value);
 				buff_to_apply->timer.Start();
 				buff_to_apply->buff_active = true;
+				buff_to_apply->target = target;
+				appliedbuffList.push_back(buff_to_apply);
 			}
-			else if (buff_to_apply->attr_to_change == "strength")
+
+			else if (buff_to_apply->attr_to_change.compare("strength") == 0)
 			{
-				int original_value = target->GetPlayerAttack();
-				target->SetPlayerAttack(original_value / buff_to_apply->value);
-				buff_to_apply->value = original_value;
-				buff_to_apply->target = target;
-				appliedbuffList.push_back(buff_to_apply);
+				target->SetPlayerAttack(target->GetPlayerAttack() / buff_to_apply->value);
 				buff_to_apply->timer.Start();
 				buff_to_apply->buff_active = true;
+				buff_to_apply->target = target;
+				appliedbuffList.push_back(buff_to_apply);
 			}
-			else if (buff_to_apply->attr_to_change == "agility")
+
+			else if (buff_to_apply->attr_to_change.compare("agility") == 0)
 			{
-				int original_value = target->GetPlayerAgility();
-				target->SetPlayerAgility(original_value / buff_to_apply->value);
-				buff_to_apply->value = original_value;
-				buff_to_apply->target = target;
-				appliedbuffList.push_back(buff_to_apply);
+				target->SetPlayerAgility(target->GetPlayerAgility() / buff_to_apply->value);
 				buff_to_apply->timer.Start();
 				buff_to_apply->buff_active = true;
+				buff_to_apply->target = target;
+				appliedbuffList.push_back(buff_to_apply);
 			}
-			else if (buff_to_apply->attr_to_change == "defense")
+
+			else if (buff_to_apply->attr_to_change.compare("defense") == 0)
 			{
-				int original_value = target->GetPlayerDefense();
-				target->SetPlayerDefense(original_value / buff_to_apply->value);
-				buff_to_apply->value = original_value;
-				buff_to_apply->target = target;
-				appliedbuffList.push_back(buff_to_apply);
+				target->SetPlayerDefense(target->GetPlayerDefense() / buff_to_apply->value);
 				buff_to_apply->timer.Start();
 				buff_to_apply->buff_active = true;
+				buff_to_apply->target = target;
+				appliedbuffList.push_back(buff_to_apply);
 			}
 
 			break;
 
 		default: LOG("applybuff doesnt work correctly"); return false;
 		}
-	}
-		
-	
+	}	
+
 	return true;
 }
 
-Buffs* j1BuffOpt::SearchBuff(std::string buff_name, std::list<Buffs*> buffList)
+Buffs* j1BuffOpt::SearchBuff(std::string buff_name)
 {
 	
-	std::list<Buffs*>::iterator item = buffList.begin();
-	while (item != buffList.end())
+	std::list<Buffs*>::iterator item = buffsList.begin();
+	while (item != buffsList.end())
 	{
 		if ((*item)->buffdebuff_name == buff_name)
 		{
-			Buffs* ret = new Buffs((*item)->timer_duration,(*item)->buffdebuff_name,(*item)->type, (*item)->attr_to_change,(*item)->oper, (*item)->value);
-			return ret;
+			return item._Ptr->_Myval; 
 		}
 		item++;
 	}
 	LOG("Error searching buff to apply");
 }
 
-bool j1BuffOpt::CheckAppliedBuff(std::list<Buffs*> appliedbuffList)
+bool j1BuffOpt::CheckAppliedBuff()
 {
 	std::list<Buffs*>::iterator item = appliedbuffList.begin();
 
 	while (item != appliedbuffList.end())
 	{
-		if ((*item)->timer_duration < (*item)->timer.Read() && (*item)->buff_active == true)
+		if (item._Ptr->_Myval->timer_duration < item._Ptr->_Myval->timer.ReadSec() && item._Ptr->_Myval->buff_active == true)
 		{
-			if ((*item)->attr_to_change == "life")
+			if (item._Ptr->_Myval->attr_to_change.compare("life") == 0)
 			{
-				(*item)->target->SetPlayerLife((*item)->value);
-				(*item)->buff_active = false;
+				switch (item._Ptr->_Myval->oper)
+				{
+				case SUM:
+					item._Ptr->_Myval->target->SetPlayerLife(item._Ptr->_Myval->target->GetPlayerLife() - item._Ptr->_Myval->value);
+					break;
+
+				case SUBSTRACT:
+					item._Ptr->_Myval->target->SetPlayerLife(item._Ptr->_Myval->target->GetPlayerLife() + item._Ptr->_Myval->value);
+					break;
+
+				case MULTIPLY:
+					item._Ptr->_Myval->target->SetPlayerLife(item._Ptr->_Myval->target->GetPlayerLife() / item._Ptr->_Myval->value);
+					break;
+
+				case DIVIDE:
+					item._Ptr->_Myval->target->SetPlayerLife(item._Ptr->_Myval->target->GetPlayerLife() * item._Ptr->_Myval->value);
+					break;
+
+				default:
+					LOG("ERROR buff_life end");
+					break;
+				}
+				item._Ptr->_Myval->buff_active = false;
+				appliedbuffList.remove(item._Ptr->_Myval);
 			}
-			else if ((*item)->attr_to_change == "strength")
+			else if (item._Ptr->_Myval->attr_to_change.compare("strength") == 0)
 			{
-				(*item)->target->SetPlayerAttack((*item)->value);
-				(*item)->buff_active = false;
+				switch (item._Ptr->_Myval->oper)
+				{
+				case SUM:
+					item._Ptr->_Myval->target->SetPlayerAttack(item._Ptr->_Myval->target->GetPlayerAttack() - item._Ptr->_Myval->value);
+					break;
+
+				case SUBSTRACT:
+					item._Ptr->_Myval->target->SetPlayerAttack(item._Ptr->_Myval->target->GetPlayerAttack() + item._Ptr->_Myval->value);
+					break;
+
+				case MULTIPLY:
+					item._Ptr->_Myval->target->SetPlayerAttack(item._Ptr->_Myval->target->GetPlayerAttack() / item._Ptr->_Myval->value);
+					break;
+
+				case DIVIDE:
+					item._Ptr->_Myval->target->SetPlayerAttack(item._Ptr->_Myval->target->GetPlayerAttack() * item._Ptr->_Myval->value);
+					break;
+
+				default:
+					LOG("ERROR buff_attack end");
+					break;
+				}	
+				item._Ptr->_Myval->buff_active = false;
+				appliedbuffList.remove(item._Ptr->_Myval);
 			}
-			else if ((*item)->attr_to_change == "agility")
+			else if (item._Ptr->_Myval->attr_to_change.compare("agility") == 0)
 			{
-				(*item)->target->SetPlayerAgility((*item)->value);
-				(*item)->buff_active = false;
+				switch (item._Ptr->_Myval->oper)
+				{
+				case SUM:
+					item._Ptr->_Myval->target->SetPlayerAgility(item._Ptr->_Myval->target->GetPlayerAgility() - item._Ptr->_Myval->value);
+					break;
+
+				case SUBSTRACT:
+					item._Ptr->_Myval->target->SetPlayerAgility(item._Ptr->_Myval->target->GetPlayerAgility() + item._Ptr->_Myval->value);
+					break;
+
+				case MULTIPLY:
+					item._Ptr->_Myval->target->SetPlayerAgility(item._Ptr->_Myval->target->GetPlayerAgility() / item._Ptr->_Myval->value);
+					break;
+
+				case DIVIDE:
+					item._Ptr->_Myval->target->SetPlayerAgility(item._Ptr->_Myval->target->GetPlayerAgility() * item._Ptr->_Myval->value);
+					break;
+
+				default:
+					LOG("ERROR buff_agility end");
+					break;
+				}	
+				item._Ptr->_Myval->buff_active = false;
+				appliedbuffList.remove(item._Ptr->_Myval);
 			}
-			else if ((*item)->attr_to_change == "defense")
+			else if (item._Ptr->_Myval->attr_to_change.compare("defense") == 0)
 			{
-				(*item)->target->SetPlayerDefense((*item)->value);
-				(*item)->buff_active = false;
+				switch (item._Ptr->_Myval->oper)
+				{
+				case SUM:
+					item._Ptr->_Myval->target->SetPlayerDefense(item._Ptr->_Myval->target->GetPlayerDefense() - item._Ptr->_Myval->value);
+					break;
+
+				case SUBSTRACT:
+					item._Ptr->_Myval->target->SetPlayerDefense(item._Ptr->_Myval->target->GetPlayerDefense() + item._Ptr->_Myval->value);
+					break;
+
+				case MULTIPLY:
+					item._Ptr->_Myval->target->SetPlayerDefense(item._Ptr->_Myval->target->GetPlayerDefense() / item._Ptr->_Myval->value);
+					break;
+
+				case DIVIDE:
+					item._Ptr->_Myval->target->SetPlayerDefense(item._Ptr->_Myval->target->GetPlayerDefense() * item._Ptr->_Myval->value);
+					break;
+
+				default:
+					LOG("ERROR buff_defense end");
+					break;
+				}	
+				item._Ptr->_Myval->buff_active = false;
+				appliedbuffList.remove(item._Ptr->_Myval);
 			}
+			return true;
 		}
 		item++;
 	}
-	return true;
+			
+	return false;
 }

@@ -3,7 +3,7 @@
 
 #include "j1Module.h"
 #include "j1BuffDebuff.h"
-#include "UI_Text_Box.h"
+#include "UI_String.h"
 
 class j1Player : public j1Module
 {
@@ -32,33 +32,32 @@ public:
 	//Getters
 	std::string GetPlayerId()const { return id; }
 	uint GetPlayerLife()const { return life; }
-	int GetPlayerDefense()const { return defense; }
-	int GetPlayerAgility()const { return agility; }
-	int GetPlayerAttack()const { return attack; }
+	uint GetPlayerDefense()const { return defense; }
+	uint GetPlayerAgility()const { return agility; }
+	uint GetPlayerAttack()const { return attack; }
 	//Setters
 	void SetPlayerLife(uint life) { this->life = life; }
-	void SetPlayerDefense(int defense) { this->defense = defense; }
+	void SetPlayerDefense(uint defense) { this->defense = defense; }
 	void SetPlayerAgility(uint agility) { this->agility = agility; }
 	void SetPlayerAttack(uint attack) { this->attack = attack; }
 
 	//Utils
 	pugi::xml_node LoadXMLPlayers(pugi::xml_document& player_doc);
-	bool LoadPlayers(pugi::xml_node& node, j1Player* unit);
+	bool LoadPlayers(pugi::xml_node& node);
 	
-	std::list<j1Player*> unitList;
 	
 private: 
 	std::string id;
-	uint life = 50;
-	int defense;
-	int agility;
-	int attack;
+	uint life;
+	uint defense;
+	uint agility;
+	uint attack;
 
 	pugi::xml_node p_node;
-	UI_Text_Box* txt_life;
-	UI_Text_Box* txt_strength; 
-	UI_Text_Box* txt_agility;
-	UI_Text_Box* txt_defense;
+	UI_String*	str_life;
+	UI_String*	str_attack;
+	UI_String*	str_agility;
+	UI_String*	str_defense;
 };
 
 

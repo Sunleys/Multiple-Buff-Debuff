@@ -52,7 +52,7 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	// Gui Upper Element ---------------------------
-	App->gui->CalculateUpperElement(scene_1_screen);
+	//App->gui->CalculateUpperElement(scene_1_screen);
 	
 	
 	return true;

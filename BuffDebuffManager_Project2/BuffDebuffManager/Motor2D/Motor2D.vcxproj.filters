@@ -43,9 +43,6 @@
     <ClCompile Include="j1Gui.cpp">
       <Filter>Develop  ========\UserInteraface</Filter>
     </ClCompile>
-    <ClCompile Include="UI_Button.cpp">
-      <Filter>Develop  ========\UserInteraface\UI_Elements</Filter>
-    </ClCompile>
     <ClCompile Include="UI_Element.cpp">
       <Filter>Develop  ========\UserInteraface\UI_Elements</Filter>
     </ClCompile>
@@ -66,6 +63,9 @@
     </ClCompile>
     <ClCompile Include="j1BuffOpt.cpp">
       <Filter>Develop  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Button.cpp">
+      <Filter>Develop  ========\UserInteraface\UI_Elements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -120,9 +120,6 @@
     <ClInclude Include="j1Gui.h">
       <Filter>Develop  ========\UserInteraface</Filter>
     </ClInclude>
-    <ClInclude Include="UI_Button.h">
-      <Filter>Develop  ========\UserInteraface\UI_Elements</Filter>
-    </ClInclude>
     <ClInclude Include="UI_Element.h">
       <Filter>Develop  ========\UserInteraface\UI_Elements</Filter>
     </ClInclude>
@@ -143,6 +140,9 @@
     </ClInclude>
     <ClInclude Include="j1BuffOpt.h">
       <Filter>Develop  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Button.h">
+      <Filter>Develop  ========\UserInteraface\UI_Elements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,14 +10,14 @@
 
 struct Buffs
 {
-	Buffs(uint timer_duration, std::string buffdebuff_name, std::string type, std::string attr_to_change, int oper, float value) : timer_duration(timer_duration), buffdebuff_name(buffdebuff_name), type(type), attr_to_change(attr_to_change), oper(oper), value(value) {}
+	Buffs(uint timer_duration, std::string buffdebuff_name, std::string type, std::string attr_to_change, int oper, uint value) : timer_duration(timer_duration), buffdebuff_name(buffdebuff_name), type(type), attr_to_change(attr_to_change), oper(oper), value(value) {}
 	//Buff characteristics
 	uint timer_duration;
 	std::string buffdebuff_name;
 	std::string type;
 	std::string attr_to_change;
 	int oper;  //operator
-	float value;
+	uint value;
 	//utils
 	j1Timer timer;
 	j1Player* target;
@@ -56,11 +56,11 @@ public:
 	pugi::xml_node LoadXMLBuffDebuff(pugi::xml_document& bd_file) const;
 
 	//Utils
-	Buffs* SearchBuff(std::string buff_name, std::list<Buffs*> buffList);
+	Buffs* SearchBuff(std::string buff_name);
 
-	bool ApplyBuffs(std::string buff_name, j1Player* target, std::list<Buffs*> buffList);
+	bool ApplyBuffs(std::string buff_name, j1Player* target);
 
-	bool CheckAppliedBuff(std::list<Buffs*> appliedbuffList);
+	bool CheckAppliedBuff();
 
 	std::list<Buffs*> buffsList;
 	std::list<Buffs*> appliedbuffList;

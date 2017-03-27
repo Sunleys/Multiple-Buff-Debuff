@@ -33,8 +33,8 @@ bool j1Player::Awake(pugi::xml_node& info)
 		for (bd_node = info_players.child("players").child("player"); bd_node && ret; bd_node = bd_node.next_sibling("player"))
 		{
 				j1Player* unit = new j1Player();
-				ret = LoadPlayers(bd_node, unit);
-				unitList.push_back(unit);
+				ret = LoadPlayers(bd_node);
+				//unitList.push_back(unit);
 		}
 	}
 
@@ -43,42 +43,34 @@ bool j1Player::Awake(pugi::xml_node& info)
 
 bool j1Player::Start()
 {
+
 	//life
-	txt_life = (UI_Text_Box*)App->gui->GenerateUI_Element(TEXT_BOX);
-	char str_life[256] = "Life: ";
+	str_life = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	str_life->Activate();
+	str_life->SetString(" ");
+	str_life->GenerateTexture();
+	str_life->ChangeString("Life: %i", life);
 
-	std::string x = "hello world";
-	std::string value = std::to_string(life);
-	std::string show_life = x + value;
-	char *y = new char[x.length() + 1];
-	strcpy_s(y, 200, show_life.c_str());
-
-	txt_life->SetText(y);
-	txt_life->SetBoxPosition(300, 300);
-	txt_life->Activate();
-
-
-	delete y;
 	//strength
-	txt_strength = (UI_Text_Box*)App->gui->GenerateUI_Element(TEXT_BOX);
-	txt_strength->SetText("Strength: 30");
-	txt_strength->SetBoxPosition(300, 300);
-	txt_strength->Activate();
+	str_attack = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	str_attack->Activate();
+	str_attack->SetString(" ");
+	str_attack->GenerateTexture();
+	str_attack->ChangeString("Strength: %i", attack);
 
 	//agility
-	txt_agility = (UI_Text_Box*)App->gui->GenerateUI_Element(TEXT_BOX);
-	txt_agility->SetText("Agility: ");
-	txt_agility->SetBoxPosition(300, 300);
-	txt_agility->Activate();
+	str_agility = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	str_agility->Activate();
+	str_agility->SetString(" ");
+	str_agility->GenerateTexture();
+	str_agility->ChangeString("Agility: %i", agility);
 
 	//defense
-	txt_defense = (UI_Text_Box*)App->gui->GenerateUI_Element(TEXT_BOX);
-	txt_defense->SetText("Defense: 30");
-	txt_defense->SetBoxPosition(300, 300);
-	txt_defense->Activate();
-
-
-
+	str_defense = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	str_defense->Activate();
+	str_defense->SetString(" ");
+	str_defense->GenerateTexture();
+	str_defense->ChangeString("Defense: %i", defense);
 
 
 	return true;
@@ -86,26 +78,63 @@ bool j1Player::Start()
 
 bool j1Player::Update(float dt)
 {
+	//Buffs 
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	{
+		App->buffdebuff->ApplyBuffs("increase_strength", this);
+		str_attack->ChangeString("Strength: %i", attack);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	{
+		App->buffdebuff->ApplyBuffs("increase_life", this);
+		str_life->ChangeString("Life: %i", life);
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
-		App->buffdebuff->ApplyBuffs("increase_strength", unitList.front(), App->buffdebuff->buffsList);
+		App->buffdebuff->ApplyBuffs("increase_agility", this);
+		str_agility->ChangeString("Agility: %i", agility);
 	}
 
-	App->buffdebuff->CheckAppliedBuff(App->buffdebuff->appliedbuffList);
-
-	if (App->input->GetMouseButtonDown(3) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 	{
-		life++;
-		std::string x = "Life: ";
-		std::string value = std::to_string(life);
-		std::string show_life = x + value;
-		char *y = new char[x.length() + 1];
-		strcpy_s(y, 200, show_life.c_str());
-
-		txt_life->SetText(y);
-		delete y;
+		App->buffdebuff->ApplyBuffs("increase_defense", this);
+		str_defense->ChangeString("Defense: %i", defense);
 	}
-		txt_life->Draw(true);
+
+
+	//Debuffs
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		if(App->buffdebuff->SearchBuff("decrease_life")->buff_active == false)
+		{
+			App->buffdebuff->ApplyBuffs("decrease_life", this);
+			str_life->ChangeString("Life: %i", life);
+		}
+	}
+
+
+	/*
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	{
+		App->buffdebuff->ApplyBuffs("mult_life", this);
+		str_life->ChangeString("Life: %i", life);
+	}
+	*/
+
+	if (App->buffdebuff->CheckAppliedBuff())
+	{
+		str_life->ChangeString("Life: %i", life);
+		str_attack->ChangeString("Strength: %i", attack);
+		str_agility->ChangeString("Agility: %i", agility);
+		str_defense->ChangeString("Defense: %i", defense);
+	}
+
+	str_life->DrawAt(50, 100);
+	str_attack->DrawAt(50, 200);
+	str_agility->DrawAt(50, 300);
+	str_defense->DrawAt(50, 400);
 
 	return true;
 }
@@ -143,21 +172,19 @@ pugi::xml_node j1Player::LoadXMLPlayers(pugi::xml_document& player_doc)
 }
 
 
-bool j1Player::LoadPlayers(pugi::xml_node& node, j1Player* unit)
+bool j1Player::LoadPlayers(pugi::xml_node& node)
 {
 	bool ret = false;
 
-	if (node && unit)
-	{
-		pugi::xml_node node_units;
-		ret = true;
-		unit->id = node.attribute("id").as_string();
-		unit->life = node.attribute("life").as_uint();
-		unit->agility = node.attribute("agility").as_uint();
-		unit->defense = node.attribute("defense").as_uint();
-		unit->attack = node.attribute("attack").as_uint();
+	pugi::xml_node node_units;
+	ret = true;
+	id = node.attribute("id").as_string();
+	life = node.attribute("life").as_uint();
+	agility = node.attribute("agility").as_uint();
+	defense = node.attribute("defense").as_uint();
+	attack = node.attribute("attack").as_uint();
 
-	}
+
 	return ret;
 }
 

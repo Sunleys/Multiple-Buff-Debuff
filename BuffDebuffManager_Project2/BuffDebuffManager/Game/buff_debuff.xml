@@ -1,26 +1,5 @@
-
-<!--<buff_debuff>
-	<buff>
-		<type id="attribute">
-			<name timer_duration="5" operator="0" value="5" target="enemy" attr_to_change="strength">get_agility</name>
-			<name timer_duration="5" operator="0" value="5" target="enemy" attr_to_change="defense">get_defense</name>
-			<name timer_duration="5" operator="0" value="5" target="enemy" attr_to_change="agility">get_strength</name>
-			<name timer_duration="5" operator="1" value="5" target="enemy" attr_to_change="strength">lose_strength</name>
-			<name timer_duration="5" operator="1" value="5" target="enemy" attr_to_change="defense">lose_defense</name>
-			<name timer_duration="5" operator="1" value="5" target="enemy" attr_to_change="agility">lose_agility</name>
-		</type>
-		<type id="item">
-			<name timer_duration="5" operator="1" value="5" target="enemy">get_life</name>
-			<name timer_duration="5" operator="2" value="5" target="enemy">poison</name>
-			<name timer_duration="5" operator="2" value="5" target="enemy">get_speed</name>
-			<name timer_duration="5" operator="2" value="5" target="enemy">lose_speed</name>
-		</type>
-		<type id="terrain">
-			<name height="" width="" timer_duration="5" operator="2" value="5" target="">area</name>
-		</type>
-	</buff>
-</buff_debuff>-->
 <!--Opertator 0 = SUM; 1 = SUBSTRACT; 2 = MULTIPLY; 3 = DIVIDE; --> 
+
 <buff_debuff>
   <buffs>
     <!-- buffs-->
@@ -28,10 +7,11 @@
     <buff type="Buff" timer_duration="10" operator="0" value="8" attr_to_change="strength" name="increase_strength"></buff>
     <buff type="Buff" timer_duration="8" operator="2" value="3" attr_to_change="agility" name="increase_agility"></buff>
     <buff type="Buff" timer_duration="9" operator="2" value="2" attr_to_change="defense" name="increase_defense"></buff>
+	<buff type="Buff" timer_duration="5" operator="2" value="3" attr_to_change="life" name="mult_life"></buff>
     <!--debuffs--> 
     <buff type="Debuff" timer_duration="5" operator="1" value="2" attr_to_change="life" name="decrease_life"></buff>
     <buff type="Debuff" timer_duration="5" operator="1" value="5" attr_to_change="strength" name="decrease_strength"></buff>
     <buff type="Debuff" timer_duration="8" operator="3" value="2" attr_to_change="agility" name="decrease_agility"></buff>
     <buff type="Debuff" timer_duration="5" operator="3" value="2" attr_to_change="defense" name="decrease_defense"></buff>
-  </buffs>
+ </buffs>
 </buff_debuff>

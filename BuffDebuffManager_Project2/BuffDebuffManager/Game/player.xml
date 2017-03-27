@@ -1,5 +1,4 @@
-<!-- :) -->
 <players>
-	<player id="player1" life="3" defense="0" agility="5" attack="3" >Hero</player>
-	<enemy id="enemy1" life="3" defense="10" agility="10" attack="3" >Monster</enemy>
+	<player id="player1" life="3" defense="5" agility="10" attack="3" >Hero</player>
+	<enemy id="enemy1" life="3" defense="10" agility="7" attack="3" >Monster</enemy>
 </players>

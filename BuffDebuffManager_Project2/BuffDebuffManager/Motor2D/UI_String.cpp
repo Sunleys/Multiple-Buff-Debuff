@@ -195,3 +195,26 @@ void UI_String::SetColor(SDL_Color new_color)
 	text_color = new_color;
 }
 
+void UI_String::ChangeString(const char* new_text, ...)
+{
+	
+	static char tmp_string[1000];
+	static va_list ap;
+
+	va_start(ap, new_text);
+	vsprintf_s(tmp_string, 1000, new_text, ap);
+	va_end(ap);
+
+	this->DeleteTexture();
+	this->SetString(tmp_string);
+	this->GenerateTexture();
+}
+
+void UI_String::DeleteTexture()
+{
+	if (text_texture != nullptr)
+	{
+		SDL_DestroyTexture(text_texture);
+		text_texture = nullptr;
+	}
+}
