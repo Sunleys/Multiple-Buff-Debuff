@@ -46,13 +46,17 @@ As a final step we have to check our list of applied buff so we can remove the b
 We hope you learned some way to improve or implement your basic buff/debuff manager, thank you for reading and also here we will let you this explanation as a excercise so you can do it by yourself and learn it.
 
 Also here you can we let some documentation in case you need it:
- - 
+
+[Some ideas to implement your system](http://gamedev.stackexchange.com/questions/29982/whats-a-way-to-implement-a-flexible-buff-debuff-system)
+
+[Good discussion about do a system using trees](https://www.reddit.com/r/gamedev/comments/28oqft/a_question_or_two_about_code_and_a_buffdebuff/?st=j003ix80&sh=dc0acf23)
+
+[More disscussions about hor to implement this system](https://www.gamedev.net/topic/622135-time-related-state-effects-buffsdebuffs-what-are-manageable-code-designs/)
+
+[Different aproach to a buff debuff system](http://www.gamasutra.com/view/news/244480/Game_Design_Deep_Dive_Darkest_Dungeons_Affliction_System.php) 
  
  
 ## TODOs
-
-
-## Explanation of any other improvements on the system
 
 
 
