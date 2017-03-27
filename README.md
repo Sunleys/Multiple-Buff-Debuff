@@ -58,7 +58,14 @@ Also here you can we let some documentation in case you need it:
  
 ## TODOs
 
+- TODO 1: Open the XML file and implement a buff you can follow the other ones, make sure of modify the attribute Life with this buff. 
 
+- TODO 2: Search and choose the correct buff using the name, remember we already have a list with buffs created
 
+- TODO 3: Follow the diagram, and try to think what is the best way to implement this method. Remember you have methods already done to modify player attributes. Also think you'll need to undo this buff when the time is gone.
+
+![diagram](http://subirimagen.me/uploads/20170327004606.png)
+
+- TODO 4: Implement you're buff so you can apply to the attribute we want, make sure of write correctly the name of the buff.
 
 
